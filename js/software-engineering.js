@@ -1,7 +1,7 @@
 /**
  * Software Engineering Portfolio - Advanced Interactive Effects
  * Author: Sanjit Shrestha
- * Version: 3.0 - Enhanced Software Engineering Experience
+ * Version: 3.0 - Enhanced Software Engineering Experience with Mobile Optimization
  */
 
 class SoftwareEngineeringPortfolio {
@@ -12,13 +12,39 @@ class SoftwareEngineeringPortfolio {
         this.particles = [];
         this.matrixColumns = [];
         this.networkNodes = [];
+
+        // Mobile detection and optimization
+        this.isMobile = this.detectMobileDevice();
+        this.isTablet = this.detectTabletDevice();
+        this.touchSupport = this.detectTouchSupport();
+        this.reduceMotion = this.checkReducedMotion();
+
         this.init();
+    }
+
+    // Mobile Detection Methods
+    detectMobileDevice() {
+        return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    detectTabletDevice() {
+        return window.innerWidth > 768 && window.innerWidth <= 1024;
+    }
+
+    detectTouchSupport() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
+    checkReducedMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
     init() {
         if (this.isInitialized) return;
 
         console.log('🚀 Initializing Software Engineering Portfolio v3.0...');
+        console.log(`📱 Device: ${this.isMobile ? 'Mobile' : this.isTablet ? 'Tablet' : 'Desktop'}`);
+        console.log(`👆 Touch: ${this.touchSupport ? 'Supported' : 'Not Supported'}`);
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.initializeAll());
@@ -26,51 +52,111 @@ class SoftwareEngineeringPortfolio {
             this.initializeAll();
         }
 
+        // Add resize listener for responsive updates
+        this.setupResizeListener();
+
         this.isInitialized = true;
+    }
+
+    setupResizeListener() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 250);
+        });
+    }
+
+    handleResize() {
+        this.isMobile = this.detectMobileDevice();
+        this.isTablet = this.detectTabletDevice();
+
+        // Re-initialize mobile-sensitive components
+        this.adjustParticleSystem();
+        this.adjustMatrixRain();
+        this.adjustAnimations();
     }
 
     initializeAll() {
         console.log('⚡ Loading software engineering components...');
 
         this.createSoftwareBackground();
-        this.initializeMatrixRain();
-        this.initializeBinaryBackground();
-        this.initializeFloatingCode();
+
+        // Conditional initialization based on device type
+        if (!this.reduceMotion) {
+            if (this.isMobile) {
+                this.initializeMobileOptimizedEffects();
+            } else {
+                this.initializeFullEffects();
+            }
+        }
+
         this.initializeTerminalEffects();
-        this.initializeNetworkVisualization();
         this.initializeCodingStats();
         this.initializeCodeEditor();
-        this.initializeArchitectureDiagram();
         this.initializeNavbarEffects();
         this.initializeSmoothScrolling();
         this.initializeTypingAnimations();
-        this.initializeParticleSystem();
         this.initializeInteractiveElements();
+
+        // Mobile-specific features
+        if (this.touchSupport) {
+            this.initializeTouchInteractions();
+        }
+
         this.initializePerformanceMonitoring();
+        this.initializeEnhancedNavigation();
 
         console.log('✨ Software Engineering Portfolio fully loaded!');
     }
 
+    initializeMobileOptimizedEffects() {
+        // Lightweight effects for mobile
+        this.initializeSimpleParticles();
+        this.initializeMobileBackground();
+    }
+
+    initializeFullEffects() {
+        // Full effects for desktop
+        this.initializeMatrixRain();
+        this.initializeBinaryBackground();
+        this.initializeFloatingCode();
+        this.initializeNetworkVisualization();
+        this.initializeArchitectureDiagram();
+        this.initializeParticleSystem();
+    }
+
     createSoftwareBackground() {
-        // Create circuit board background
+        // Create circuit board background (lightweight version for mobile)
         const circuitBg = document.createElement('div');
         circuitBg.className = 'circuit-background';
+
+        if (this.isMobile) {
+            circuitBg.style.opacity = '0.3';
+            circuitBg.style.animationDuration = '30s'; // Slower for better performance
+        }
+
         document.body.appendChild(circuitBg);
 
-        // Create matrix rain container
-        const matrixRain = document.createElement('div');
-        matrixRain.className = 'matrix-rain';
-        matrixRain.id = 'matrixRain';
-        document.body.appendChild(matrixRain);
+        if (!this.isMobile || !this.reduceMotion) {
+            // Create matrix rain container
+            const matrixRain = document.createElement('div');
+            matrixRain.className = 'matrix-rain';
+            matrixRain.id = 'matrixRain';
+            document.body.appendChild(matrixRain);
 
-        // Create binary background
-        const binaryBg = document.createElement('div');
-        binaryBg.className = 'binary-background';
-        binaryBg.id = 'binaryBackground';
-        document.body.appendChild(binaryBg);
+            // Create binary background
+            const binaryBg = document.createElement('div');
+            binaryBg.className = 'binary-background';
+            binaryBg.id = 'binaryBackground';
+            document.body.appendChild(binaryBg);
+        }
     }
 
     initializeMatrixRain() {
+        if (this.isMobile || this.reduceMotion) return;
+
         const matrixContainer = document.getElementById('matrixRain');
         if (!matrixContainer) return;
 
@@ -81,7 +167,8 @@ class SoftwareEngineeringPortfolio {
             // Generate random matrix characters
             const chars = '01ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
             let text = '';
-            for (let i = 0; i < 20; i++) {
+            const length = this.isTablet ? 15 : 20;
+            for (let i = 0; i < length; i++) {
                 text += chars.charAt(Math.floor(Math.random() * chars.length)) + '\n';
             }
             column.textContent = text;
@@ -99,165 +186,165 @@ class SoftwareEngineeringPortfolio {
             }, 12000);
         };
 
-        // Create matrix columns continuously
-        setInterval(createMatrixColumn, 300);
-    }
+        // Reduced frequency for tablets
+        const interval = this.isTablet ? 2000 : 1000;
+        const matrixInterval = setInterval(createMatrixColumn, interval);
 
-    initializeBinaryBackground() {
-        const binaryContainer = document.getElementById('binaryBackground');
-        if (!binaryContainer) return;
+        // Store for cleanup
+        this.animations.set('matrix', matrixInterval);
 
-        const createBinaryString = () => {
-            const binary = document.createElement('div');
-            binary.className = 'binary-string';
-
-            // Generate random binary string
-            let binaryText = '';
-            for (let i = 0; i < 50; i++) {
-                binaryText += Math.random() > 0.5 ? '1' : '0';
-                if (i % 8 === 7) binaryText += ' ';
-            }
-            binary.textContent = binaryText;
-
-            binary.style.top = Math.random() * 100 + '%';
-            binary.style.animationDelay = Math.random() * 10 + 's';
-            binary.style.animationDuration = (15 + Math.random() * 10) + 's';
-
-            binaryContainer.appendChild(binary);
-
-            setTimeout(() => {
-                if (binary.parentNode) {
-                    binary.parentNode.removeChild(binary);
-                }
-            }, 25000);
-        };
-
-        setInterval(createBinaryString, 2000);
-    }
-
-    initializeFloatingCode() {
-        // Ensure magicParticles container exists
-        let magicContainer = document.getElementById('magicParticles');
-        if (!magicContainer) {
-            magicContainer = document.createElement('div');
-            magicContainer.className = 'magic-particles';
-            magicContainer.id = 'magicParticles';
-            magicContainer.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: -1;
-                overflow: hidden;
-            `;
-            document.body.appendChild(magicContainer);
+        // Create initial columns
+        const initialCount = this.isTablet ? 3 : 5;
+        for (let i = 0; i < initialCount; i++) {
+            setTimeout(createMatrixColumn, i * 500);
         }
+    }
 
-        const modernTechStack = [
-            // Backend & Languages
-            { text: 'Java 17+', category: 'java' },
-            { text: 'Spring Boot', category: 'spring' },
-            { text: 'Kotlin', category: 'java' },
-            { text: 'TypeScript', category: 'frontend' },
-            { text: 'Python', category: 'ai' },
-            { text: 'Go', category: 'devops' },
-            { text: 'Rust', category: 'java' },
+    initializeSimpleParticles() {
+        // Lightweight particle system for mobile
+        const particleContainer = document.createElement('div');
+        particleContainer.className = 'mobile-particles';
+        particleContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        `;
+        document.body.appendChild(particleContainer);
 
-            // Cloud & Infrastructure
-            { text: 'AWS Lambda', category: 'cloud' },
-            { text: 'Kubernetes', category: 'devops' },
-            { text: 'Docker', category: 'devops' },
-            { text: 'Terraform', category: 'devops' },
-            { text: 'Microservices', category: 'cloud' },
-            { text: 'Serverless', category: 'cloud' },
-            { text: 'GraphQL', category: 'frontend' },
-
-            // AI & Modern Tech
-            { text: 'ChatGPT API', category: 'ai' },
-            { text: 'OpenAI', category: 'ai' },
-            { text: 'Machine Learning', category: 'ai' },
-            { text: 'TensorFlow', category: 'ai' },
-            { text: 'Neural Networks', category: 'ai' },
-            { text: 'LLM Integration', category: 'ai' },
-
-            // Frontend Modern
-            { text: 'React 18', category: 'frontend' },
-            { text: 'Next.js', category: 'frontend' },
-            { text: 'Vue 3', category: 'frontend' },
-            { text: 'Svelte', category: 'frontend' },
-            { text: 'Tailwind CSS', category: 'frontend' },
-
-            // Databases & Data
-            { text: 'PostgreSQL', category: 'database' },
-            { text: 'MongoDB', category: 'database' },
-            { text: 'Redis', category: 'database' },
-            { text: 'Elasticsearch', category: 'database' },
-            { text: 'Apache Kafka', category: 'database' },
-            { text: 'Vector DB', category: 'database' },
-
-            // DevOps & Modern Tools
-            { text: 'GitHub Actions', category: 'devops' },
-            { text: 'GitLab CI/CD', category: 'devops' },
-            { text: 'Jenkins', category: 'devops' },
-            { text: 'Prometheus', category: 'devops' },
-            { text: 'Grafana', category: 'devops' },
-            { text: 'Istio', category: 'devops' },
-
-            // Cloud Platforms
-            { text: 'AWS EKS', category: 'cloud' },
-            { text: 'Azure', category: 'cloud' },
-            { text: 'GCP', category: 'cloud' },
-            { text: 'Vercel', category: 'cloud' },
-            { text: 'Cloudflare', category: 'cloud' },
-
-            // Modern Frameworks
-            { text: 'Spring WebFlux', category: 'spring' },
-            { text: 'Quarkus', category: 'java' },
-            { text: 'Micronaut', category: 'java' },
-            { text: 'FastAPI', category: 'ai' },
-            { text: 'gRPC', category: 'java' }
-        ];
-
-        const createTechParticle = () => {
-            const container = document.getElementById('magicParticles');
-            if (!container) {
-                console.warn('Magic particles container not found');
-                return;
-            }
-
-            const tech = modernTechStack[Math.floor(Math.random() * modernTechStack.length)];
+        const createMobileParticle = () => {
             const particle = document.createElement('div');
-            particle.className = `tech-particle ${tech.category}`;
-            particle.textContent = tech.text;
+            particle.style.cssText = `
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: var(--primary-color);
+                border-radius: 50%;
+                animation: mobileFloat 8s linear infinite;
+            `;
 
             particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            particle.style.animationDuration = (8 + Math.random() * 6) + 's';
+            particle.style.animationDelay = Math.random() * 8 + 's';
 
-            container.appendChild(particle);
-
-            // Debug log
-            console.log(`Created tech particle: ${tech.text} (${tech.category})`);
+            particleContainer.appendChild(particle);
 
             setTimeout(() => {
                 if (particle.parentNode) {
                     particle.parentNode.removeChild(particle);
                 }
-            }, 15000);
+            }, 8000);
         };
 
-        // Create tech particles continuously
-        const particleInterval = setInterval(createTechParticle, 600);
+        // Create particles less frequently on mobile
+        const mobileParticleInterval = setInterval(createMobileParticle, 3000);
+        this.animations.set('mobileParticles', mobileParticleInterval);
+    }
 
-        // Create initial burst
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createTechParticle, i * 150);
+    initializeTouchInteractions() {
+        // Enhanced touch interactions for mobile
+        document.body.style.cssText += `
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        `;
+
+        // Touch-friendly button interactions
+        const buttons = document.querySelectorAll('.btn, .tech-badge, .professional-card');
+        buttons.forEach(button => {
+            // Add touch feedback
+            button.addEventListener('touchstart', (e) => {
+                button.style.transform = 'scale(0.98)';
+                button.style.transition = 'transform 0.1s ease';
+            });
+
+            button.addEventListener('touchend', (e) => {
+                setTimeout(() => {
+                    button.style.transform = '';
+                    button.style.transition = 'transform 0.3s ease';
+                }, 100);
+            });
+
+            button.addEventListener('touchcancel', (e) => {
+                button.style.transform = '';
+                button.style.transition = 'transform 0.3s ease';
+            });
+        });
+
+        // Improve scroll performance on mobile
+        let ticking = false;
+        const updateScrollEffects = () => {
+            if (this.isMobile) {
+                // Simplified scroll effects for mobile
+                const scrollY = window.scrollY;
+                const navbar = document.querySelector('.navbar');
+                if (navbar) {
+                    if (scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                }
+            }
+            ticking = false;
+        };
+
+        document.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+
+    adjustParticleSystem() {
+        // Adjust particle count based on screen size
+        const existingParticles = document.querySelectorAll('.tech-particle, .mobile-particles div');
+        const targetCount = this.isMobile ? 5 : this.isTablet ? 15 : 30;
+
+        if (existingParticles.length > targetCount) {
+            // Remove excess particles
+            for (let i = targetCount; i < existingParticles.length; i++) {
+                if (existingParticles[i].parentNode) {
+                    existingParticles[i].parentNode.removeChild(existingParticles[i]);
+                }
+            }
         }
+    }
 
-        // Store interval for cleanup
-        this.animations.set('techParticles', particleInterval);
+    adjustMatrixRain() {
+        if (this.isMobile && document.getElementById('matrixRain')) {
+            // Disable matrix rain on mobile
+            const matrixContainer = document.getElementById('matrixRain');
+            matrixContainer.style.display = 'none';
+
+            // Clear matrix interval
+            const matrixInterval = this.animations.get('matrix');
+            if (matrixInterval) {
+                clearInterval(matrixInterval);
+            }
+        }
+    }
+
+    adjustAnimations() {
+        // Adjust animation speeds based on device
+        const animationElements = document.querySelectorAll('.tech-particle, .matrix-column, .binary-string');
+        animationElements.forEach(element => {
+            if (this.isMobile) {
+                element.style.animationDuration = '8s'; // Slower on mobile
+            } else if (this.isTablet) {
+                element.style.animationDuration = '6s'; // Medium on tablet
+            } else {
+                element.style.animationDuration = '4s'; // Fast on desktop
+            }
+        });
     }
 
     initializeTerminalEffects() {
@@ -716,6 +803,289 @@ class SoftwareEngineeringPortfolio {
         } else {
             window.addEventListener('load', displayMetrics);
         }
+    }
+
+    // Enhanced Navigation Functionality - Fixed for Bootstrap Collapse
+    initializeEnhancedNavigation() {
+        console.log('🧭 Initializing enhanced navigation with Bootstrap collapse support...');
+
+        this.setupScrollNavigation();
+        this.setupBootstrapMobileNavigation(); // Updated method name
+        this.setupSmoothScrolling();
+        this.setupActiveSection();
+        this.setupNavigationAnimations();
+    }
+
+    setupScrollNavigation() {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
+        let lastScrollTop = 0;
+        let scrollThreshold = 100;
+        let isScrolling = false;
+
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Add scrolled class
+            if (scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Smart hide/show navbar on larger screens
+            if (!this.isMobile && scrollTop > scrollThreshold) {
+                if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight * 2) {
+                    navbar.classList.add('navbar-hidden');
+                    navbar.classList.remove('navbar-visible');
+                } else {
+                    navbar.classList.add('navbar-visible');
+                    navbar.classList.remove('navbar-hidden');
+                }
+            } else {
+                navbar.classList.remove('navbar-hidden', 'navbar-visible');
+            }
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            isScrolling = false;
+        };
+
+        // Throttled scroll handler for performance
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                requestAnimationFrame(handleScroll);
+                isScrolling = true;
+            }
+        }, { passive: true });
+    }
+
+    setupBootstrapMobileNavigation() {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+        if (!navbarToggler || !navbarCollapse) return;
+
+        // Remove any conflicting event listeners
+        navbarToggler.removeEventListener('click', this.mobileToggleHandler);
+
+        // Let Bootstrap handle the basic toggle, but add our enhancements
+        navbarToggler.addEventListener('click', (e) => {
+            // Don't prevent default - let Bootstrap handle it
+            const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
+
+            // Add/remove body class for scroll prevention if needed
+            if (!isExpanded) {
+                document.body.classList.add('navbar-open');
+            } else {
+                document.body.classList.remove('navbar-open');
+            }
+
+            // Update toggler state for our CSS animations
+            setTimeout(() => {
+                const newState = navbarToggler.getAttribute('aria-expanded') === 'true';
+                if (newState) {
+                    navbarToggler.classList.remove('collapsed');
+                } else {
+                    navbarToggler.classList.add('collapsed');
+                }
+            }, 10);
+        });
+
+        // Enhanced mobile menu close behavior
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 992) { // Only on mobile
+                    // Use Bootstrap's collapse method
+                    if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                            toggle: false
+                        });
+                        bsCollapse.hide();
+                    } else {
+                        // Fallback for if Bootstrap JS isn't loaded
+                        navbarCollapse.classList.remove('show');
+                        navbarToggler.classList.add('collapsed');
+                        navbarToggler.setAttribute('aria-expanded', 'false');
+                    }
+
+                    // Clean up body class
+                    document.body.classList.remove('navbar-open');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside (only on mobile)
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 992 &&
+                !navbarToggler.contains(e.target) &&
+                !navbarCollapse.contains(e.target) &&
+                navbarCollapse.classList.contains('show')) {
+
+                // Use Bootstrap's collapse method
+                if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                        toggle: false
+                    });
+                    bsCollapse.hide();
+                } else {
+                    // Fallback
+                    navbarCollapse.classList.remove('show');
+                    navbarToggler.classList.add('collapsed');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                }
+
+                document.body.classList.remove('navbar-open');
+            }
+        });
+
+        // Listen to Bootstrap collapse events for additional enhancements
+        navbarCollapse.addEventListener('show.bs.collapse', () => {
+            document.body.classList.add('navbar-open');
+            navbarToggler.classList.remove('collapsed');
+        });
+
+        navbarCollapse.addEventListener('hide.bs.collapse', () => {
+            document.body.classList.remove('navbar-open');
+            navbarToggler.classList.add('collapsed');
+        });
+
+        // Handle window resize to ensure proper state
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992) {
+                // Desktop view - ensure mobile menu is closed and body class is removed
+                document.body.classList.remove('navbar-open');
+                navbarCollapse.classList.remove('show');
+                navbarToggler.classList.add('collapsed');
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    setupSmoothScrolling() {
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    const navbar = document.querySelector('.navbar');
+                    const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                    const offsetTop = targetSection.offsetTop - navbarHeight - 20;
+
+                    // Smooth scroll with better performance
+                    const startPosition = window.pageYOffset;
+                    const distance = offsetTop - startPosition;
+                    const duration = Math.min(Math.abs(distance) / 2, 800);
+                    let start = null;
+
+                    function step(timestamp) {
+                        if (!start) start = timestamp;
+                        const progress = timestamp - start;
+                        const percentage = Math.min(progress / duration, 1);
+
+                        // Easing function for smooth animation
+                        const easeInOutCubic = percentage < 0.5
+                            ? 4 * percentage * percentage * percentage
+                            : (percentage - 1) * (2 * percentage - 2) * (2 * percentage - 2) + 1;
+
+                        window.scrollTo(0, startPosition + distance * easeInOutCubic);
+
+                        if (progress < duration) {
+                            requestAnimationFrame(step);
+                        }
+                    }
+
+                    requestAnimationFrame(step);
+                }
+            });
+        });
+    }
+
+    setupActiveSection() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+        if (!sections.length || !navLinks.length) return;
+
+        const observerOptions = {
+            rootMargin: '-20% 0px -75% 0px',
+            threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+
+                    // Remove active class from all nav links
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+
+                    // Add active class to corresponding nav link
+                    const activeLink = document.querySelector(`.navbar-nav .nav-link[href="#${sectionId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Store observer for cleanup
+        this.observers.set('navigation', sectionObserver);
+    }
+
+    setupNavigationAnimations() {
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        const navbar = document.querySelector('.navbar');
+
+        // Add staggered animation to nav links on page load
+        navLinks.forEach((link, index) => {
+            link.style.opacity = '0';
+            link.style.transform = 'translateY(-10px)';
+
+            setTimeout(() => {
+                link.style.transition = 'all 0.3s ease';
+                link.style.opacity = '1';
+                link.style.transform = 'translateY(0)';
+            }, 100 + (index * 50));
+        });
+
+        // Enhanced hover effects for desktop
+        if (!this.isMobile) {
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    link.style.transform = 'translateY(-2px)';
+                });
+
+                link.addEventListener('mouseleave', () => {
+                    link.style.transform = 'translateY(0)';
+                });
+            });
+        }
+
+        // Loading state for navigation
+        const showLoadingState = () => {
+            navbar.classList.add('loading');
+            setTimeout(() => {
+                navbar.classList.remove('loading');
+            }, 1000);
+        };
+
+        // Show loading state on page transitions
+        navLinks.forEach(link => {
+            link.addEventListener('click', showLoadingState);
+        });
     }
 
     // Public API methods
