@@ -2051,6 +2051,7 @@ h6 { font-size: 0.9rem; }
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
+
 /* Prevent navbar from interfering with page content */
 body {
     padding-top: 76px; /* Account for fixed navbar */
@@ -2077,1454 +2078,230 @@ body.navbar-open {
     }
 }
 
-/* Enhanced Buttons */
-.btn {
-    font-weight: 600;
-    padding: var(--spacing-base) var(--spacing-xl);
-    border-radius: var(--radius-base);
-    transition: var(--transition-base);
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-primary);
-}
-
-.btn:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-.btn-primary {
-    background: var(--gradient-primary);
-    color: var(--white);
-    box-shadow: var(--shadow-primary);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.3);
-}
-
-.btn-outline-primary {
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    background: transparent;
-}
-
-.btn-outline-primary:hover {
-    background: var(--primary-color);
-    color: var(--white);
-    transform: translateY(-2px);
-}
-
-.btn-code {
-    background: var(--gradient-code);
-    color: var(--white);
-    box-shadow: var(--shadow-code);
-}
-
-.btn-code:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
-}
-
-/* Enhanced Cards */
-.professional-card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-    transition: var(--transition-base);
-    overflow: hidden;
-    position: relative;
-    padding: var(--spacing-xl);
-}
-
-.professional-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gradient-primary);
-    opacity: 0;
-    transition: var(--transition-base);
-}
-
-.professional-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-}
-
-.professional-card:hover::before {
-    opacity: 1;
-}
-
-/* Tech Badges */
-.tech-badge {
-    background: var(--gradient-primary);
-    color: var(--white);
-    padding: var(--spacing-sm) var(--spacing-base);
-    border-radius: var(--radius-base);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    display: inline-block;
-    margin: var(--spacing-xs);
-    transition: var(--transition-base);
-    box-shadow: var(--shadow-primary);
-    font-family: var(--font-code);
-}
-
-.tech-badge:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3);
-}
-
-.tech-badge.backend {
-    background: var(--gradient-code);
-    box-shadow: var(--shadow-code);
-}
-
-.tech-badge.cloud {
-    background: var(--gradient-success);
-    box-shadow: 0 4px 16px rgba(0, 200, 81, 0.2);
-}
-
-.tech-badge.database {
-    background: var(--gradient-purple);
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
-}
-
-/* Code Block Styling */
-.code-block {
-    background: var(--dark-bg);
-    color: #e2e8f0;
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    font-family: var(--font-code);
-    font-size: var(--font-size-sm);
-    margin: var(--spacing-xl) 0;
-    border-left: 4px solid var(--code-color);
-    box-shadow: var(--shadow-base);
-    position: relative;
-    overflow: hidden;
-}
-
-.code-block::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--code-color) 50%, transparent 100%);
-}
-
-.code-comment { color: #94a3b8; }
-.code-keyword { color: #ff6b35; }
-.code-string { color: #00c851; }
-.code-function { color: #0066cc; }
-
-/* Social Links */
-.social-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: var(--gradient-primary);
-    color: var(--white);
-    border-radius: var(--radius-base);
-    text-decoration: none;
-    margin: 0 var(--spacing-sm);
-    transition: var(--transition-base);
-    box-shadow: var(--shadow-primary);
-}
-
-.social-links a:hover {
-    background: var(--gradient-code);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
-}
-
 /* ============================================
-   CONTACT SECTION & TERMINAL STYLING FIXES
+   MOBILE-RESPONSIVE TECH PARTICLES
    ============================================ */
 
-/* Terminal Card Styling - Missing Classes */
-.terminal-card {
-    background: var(--dark-bg);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-base);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: var(--font-code);
-}
-
-.terminal-header {
-    background: #334155;
-    color: #e2e8f0;
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-bottom: 1px solid #475569;
-    font-family: var(--font-code);
-}
-
-.terminal-body {
-    background: var(--dark-bg);
-    color: #e2e8f0;
-    padding: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    font-family: var(--font-code);
-}
-
-.terminal-prompt {
-    color: var(--accent-color);
-    font-weight: 600;
-}
-
-.terminal-command {
-    color: #60a5fa;
-    font-weight: 500;
-}
-
-/* Contact Section Enhanced Styling */
-#contact {
-    position: relative;
-    z-index: 2;
-}
-
-#contact .section-title {
-    font-family: var(--font-code);
-    font-size: clamp(2rem, 4vw, 2.5rem);
-    margin-bottom: 1rem;
-}
-
-#contact .section-subtitle {
-    font-size: 1.125rem;
-    color: var(--secondary-color);
-    margin-bottom: 3rem;
-}
-
-/* Contact Engineering Icons Fix */
-#contact .engineering-icon {
-    background: var(--gradient-primary);
-    color: var(--white);
-    border-radius: var(--radius-base);
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin: 0 auto 1rem;
-    box-shadow: var(--shadow-primary);
-    transition: var(--transition-base);
-    position: relative;
-    z-index: 1;
-}
-
-/* Contact Info Text Spacing */
-#contact .col-md-3 h6 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.3;
-}
-
-#contact .col-md-3 p {
-    margin-bottom: 0;
-    padding: 0 0.5rem;
-    line-height: 1.4;
-    font-size: 0.875rem;
-}
-
-/* Terminal Card Spacing Fix */
-#contact .terminal-card {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    clear: both;
-}
-
-/* Social Links Container Fix */
-#contact .social-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-}
-
-/* Button Container Fix */
-#contact .text-center:last-child {
-    margin-top: 1rem;
-    clear: both;
-}
-
-/* Prevent Text Overlap */
-#contact .code-font a {
-    word-break: break-word;
-    line-height: 1.3;
-}
-
-/* ============================================
-   MOBILE RESPONSIVE FIXES FOR CONTACT OVERLAP
-   ============================================ */
-
-/* Small Mobile Devices */
-@media (max-width: 575.98px) {
-    #contact .col-md-3 {
-        width: 100%;
-        max-width: 100%;
-        flex: 0 0 100%;
-        margin-bottom: 2rem !important;
-        padding: 1rem;
-    }
-
-    #contact .row.text-center {
-        margin-bottom: 3rem !important;
-    }
-
-    #contact .engineering-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
-        margin-bottom: 0.75rem;
-    }
-
-    #contact h6 {
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-    }
-
-    #contact p.small {
-        font-size: 0.8rem;
-        line-height: 1.3;
-    }
-
-    /* Stack elements vertically with proper spacing */
-    #contact .terminal-card {
-        margin: 2rem 0;
-    }
-
-    #contact .social-links {
-        margin: 2rem 0;
-        gap: 0.75rem;
-    }
-
-    #contact .btn {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    #contact .btn.mr-3 {
-        margin-right: 0 !important;
-    }
-}
-
-/* Medium Mobile Devices */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    #contact .col-md-3 {
-        width: 50%;
-        max-width: 50%;
-        flex: 0 0 50%;
-        margin-bottom: 2rem !important;
-    }
-
-    #contact .row.text-center {
-        margin-bottom: 2.5rem !important;
-    }
-}
-
-/* Tablet Devices */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    #contact .col-md-3 {
-        margin-bottom: 2rem !important;
-    }
-
-    #contact .engineering-icon {
-        width: 55px;
-        height: 55px;
-    }
-
-    #contact h6 {
-        font-size: 0.95rem;
-    }
-}
-
-/* Large Screens - Ensure proper spacing */
-@media (min-width: 992px) {
-    #contact .col-md-3 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    #contact .row.text-center {
-        margin-bottom: 2rem !important;
-    }
-}
-
-/* Footer Enhancement */
-footer {
-    background: var(--dark-bg) !important;
-    color: var(--white);
-    padding: 2rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 10;
-}
-
-footer .code-font {
-    font-family: var(--font-code);
-    font-size: 0.9rem;
-}
-
-footer a {
-    color: #94a3b8;
-    text-decoration: none;
-    transition: var(--transition-base);
-    font-weight: 500;
-}
-
-footer a:hover {
-    color: var(--white);
-    text-decoration: none;
-    transform: translateY(-1px);
-}
-
-footer a:hover i {
-    color: var(--primary-color);
-}
-
-/* Mobile Responsive Fixes for Contact Section */
-@media (max-width: 768px) {
-    #contact .row .col-md-3 {
-        margin-bottom: 2rem;
-    }
-
-    #contact .terminal-card {
-        margin-bottom: 2rem;
-    }
-
-    #contact .btn {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    #contact .btn.mr-3 {
-        margin-right: 0 !important;
-    }
-
-    #contact .social-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-    }
-
-    #contact .social-links a {
-        width: 45px;
-        height: 45px;
-    }
-
-    /* Footer Mobile Fix */
-    footer .row {
-        text-align: center;
-    }
-
-    footer .col-md-6.text-right {
-        text-align: center !important;
-        margin-top: 1rem;
-    }
-
-    footer .text-right {
-        text-align: center !important;
-    }
-}
-
-/* Contact Section Background Enhancement */
-#contact::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        linear-gradient(135deg, rgba(0, 102, 204, 0.02) 0%, transparent 50%),
-        radial-gradient(circle at 20% 80%, rgba(0, 102, 204, 0.03) 0%, transparent 50%);
-    z-index: -1;
-}
-
-/* Fix for missing text styles */
-.code-comment {
-    color: #94a3b8;
-    font-style: italic;
-}
-
-.code-keyword {
-    color: var(--code-color);
-    font-weight: 600;
-}
-
-.code-function {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-.code-string {
-    color: var(--accent-color);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .btn {
-        padding: var(--spacing-sm) var(--spacing-base);
-        font-size: var(--font-size-sm);
-    }
-
-    .professional-card {
-        padding: var(--spacing-base);
-    }
-
-    .tech-badge {
-        font-size: var(--font-size-xs);
-        padding: var(--spacing-xs) var(--spacing-sm);
-    }
-}
-
-/* ============================================
-   MOBILE RESPONSIVENESS - COMPREHENSIVE
-   ============================================ */
-
-/* Mobile First Approach - Base styles for mobile */
-.hero-section {
-    padding: 60px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-}
-
-.hero-title {
-    font-size: 2rem;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-/* Navigation Mobile Optimization */
-.navbar {
-    padding: 0.75rem 0;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.navbar-brand {
-    font-size: 1.1rem;
-}
-
-.navbar-nav .nav-link {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-}
-
-.navbar-toggler {
-    border: none;
-    padding: 0.25rem;
-}
-
-.navbar-toggler:focus {
-    box-shadow: none;
-}
-
-/* Mobile Navigation Menu */
-.navbar-collapse {
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    margin-top: 1rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Cards and Content Mobile Optimization */
-.professional-card {
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-}
-
-.tech-badge {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-    margin: 0.25rem;
-}
-
-/* Typography Mobile Scaling */
-h1 { font-size: 2rem; }
-h2 { font-size: 1.5rem; }
-h3 { font-size: 1.25rem; }
-h4 { font-size: 1.1rem; }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.9rem; }
-
-/* Buttons Mobile Optimization */
-.btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-    border-radius: var(--radius-base);
-}
-
-/* Form Elements */
-.form-control {
-    padding: 0.75rem;
-    font-size: 1rem;
-}
-
-/* Social Links Mobile */
-.social-links a {
-    width: 45px;
-    height: 45px;
-    margin: 0.25rem;
-}
-
-/* Particles Mobile Optimization */
+/* Base tech particle styles - now mobile responsive */
 .tech-particle {
-    display: none; /* Hide on mobile for performance */
+    position: absolute;
+    font-family: var(--font-code);
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: rgba(0, 102, 204, 0.1);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    color: var(--primary-color);
+    opacity: 0.8;
+    animation: techParticleFloat 12s infinite linear;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+    /* Mobile optimization */
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
-/* ============================================
-   SMALL MOBILE DEVICES (320px - 575px)
-   ============================================ */
-@media (max-width: 575.98px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .hero-title {
-        font-size: 1.75rem;
-        text-align: center;
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;
-        text-align: center;
-    }
-
-    .navbar-brand {
-        font-size: 1rem;
-    }
-
-    .professional-card {
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .tech-badge {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.6rem;
-    }
-
-    .btn {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-
-    /* Hide complex animations on very small screens */
-    .typing-animation,
-    .code-cursor {
-        display: none;
-    }
-
-    /* Simplify hero section */
-    .hero-section {
-        padding: 40px 0;
-        text-align: center;
-    }
-
-    /* Stack social links vertically on very small screens */
-    .social-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .social-links a {
-        margin-bottom: 0.5rem;
-    }
-}
-
-/* ============================================
-   MOBILE DEVICES (576px - 767px)
-   ============================================ */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .hero-title {
-        font-size: 2.25rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-
-    .professional-card {
-        padding: 2rem;
-    }
-
-    .tech-badge {
-        font-size: 0.85rem;
-    }
-
-    /* Enable some particles on larger mobile screens */
+/* Desktop particles - full size and features */
+@media (min-width: 992px) {
     .tech-particle {
-        display: block;
-        opacity: 0.3;
-    }
-
-    .btn {
-        width: auto;
-        min-width: 150px;
+        font-size: 12px;
+        padding: 4px 8px;
+        opacity: 0.8;
     }
 }
 
-/* ============================================
-   TABLET DEVICES (768px - 991px)
-   ============================================ */
+/* Tablet particles - medium size */
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .professional-card {
-        padding: 2.5rem;
-    }
-
-    .navbar-nav .nav-link {
-        padding: 0.5rem 1rem;
-    }
-
-    /* Enable more particles on tablets */
     .tech-particle {
-        display: block;
+        font-size: 11px;
+        padding: 3px 6px;
+        opacity: 0.6;
+        animation-duration: 10s;
+    }
+}
+
+/* Mobile particles - smaller and optimized */
+@media (max-width: 767.98px) {
+    .tech-particle {
+        font-size: 10px;
+        padding: 2px 5px;
         opacity: 0.5;
-    }
-
-    /* Grid adjustments for tablets */
-    .col-md-6 {
-        margin-bottom: 2rem;
+        animation-duration: 8s;
+        /* Simplified styling for better performance */
+        backdrop-filter: none;
+        box-shadow: 0 1px 3px rgba(0, 102, 204, 0.15);
     }
 }
 
-/* ============================================
-   DESKTOP DEVICES (992px - 1199px)
-   ============================================ */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.3rem;
-    }
-
-    .professional-card {
-        padding: 3rem;
-    }
-
-    /* Full particle system on desktop */
+/* Very small mobile - minimal particles */
+@media (max-width: 480px) {
     .tech-particle {
-        display: block;
-        opacity: 0.7;
+        font-size: 9px;
+        padding: 2px 4px;
+        opacity: 0.4;
+        animation-duration: 6s;
+        /* Further simplification */
+        border: none;
+        box-shadow: none;
     }
 }
 
-/* ============================================
-   LARGE DESKTOP DEVICES (1200px+)
-   ============================================ */
-@media (min-width: 1200px) {
-    .hero-title {
-        font-size: 3.5rem;
-    }
+/* Color variants for different tech categories */
+.tech-particle.java {
+    background: rgba(248, 152, 32, 0.1);
+    border-color: rgba(248, 152, 32, 0.3);
+    color: #f89820;
+    box-shadow: 0 2px 8px rgba(248, 152, 32, 0.2);
+}
 
-    .hero-subtitle {
-        font-size: 1.5rem;
-    }
+.tech-particle.spring {
+    background: rgba(109, 179, 63, 0.1);
+    border-color: rgba(109, 179, 63, 0.3);
+    color: #6db33f;
+    box-shadow: 0 2px 8px rgba(109, 179, 63, 0.2);
+}
 
-    .professional-card {
-        padding: 3.5rem;
-    }
+.tech-particle.cloud {
+    background: rgba(255, 153, 0, 0.1);
+    border-color: rgba(255, 153, 0, 0.3);
+    color: #ff9900;
+    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.2);
+}
 
-    /* Full effects on large screens */
-    .tech-particle {
-        display: block;
-        opacity: 1;
+.tech-particle.database {
+    background: rgba(51, 103, 145, 0.1);
+    border-color: rgba(51, 103, 145, 0.3);
+    color: #336791;
+    box-shadow: 0 2px 8px rgba(51, 103, 145, 0.2);
+}
+
+.tech-particle.frontend {
+    background: rgba(97, 218, 251, 0.1);
+    border-color: rgba(97, 218, 251, 0.3);
+    color: #61dafb;
+    box-shadow: 0 2px 8px rgba(97, 218, 251, 0.2);
+}
+
+.tech-particle.devops {
+    background: rgba(36, 150, 237, 0.1);
+    border-color: rgba(36, 150, 237, 0.3);
+    color: #2496ed;
+    box-shadow: 0 2px 8px rgba(36, 150, 237, 0.2);
+}
+
+.tech-particle.ai {
+    background: rgba(255, 107, 53, 0.1);
+    border-color: rgba(255, 107, 53, 0.3);
+    color: var(--code-color);
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+}
+
+/* Mobile-specific color simplification */
+@media (max-width: 767.98px) {
+    .tech-particle.java,
+    .tech-particle.spring,
+    .tech-particle.cloud,
+    .tech-particle.database,
+    .tech-particle.frontend,
+    .tech-particle.devops,
+    .tech-particle.ai {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 }
 
-/* ============================================
-   TOUCH DEVICE OPTIMIZATIONS
-   ============================================ */
-@media (hover: none) and (pointer: coarse) {
-    /* Touch-friendly button sizes */
-    .btn {
-        min-height: 48px;
-        padding: 0.75rem 1.5rem;
-    }
-
-    /* Touch-friendly navigation */
-    .navbar-nav .nav-link {
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Remove hover effects on touch devices */
-    .professional-card:hover,
-    .tech-badge:hover,
-    .btn:hover {
-        transform: none;
-    }
-
-    /* Larger touch targets for social links */
-    .social-links a {
-        width: 48px;
-        height: 48px;
+@media (max-width: 480px) {
+    .tech-particle.java,
+    .tech-particle.spring,
+    .tech-particle.cloud,
+    .tech-particle.database,
+    .tech-particle.frontend,
+    .tech-particle.devops,
+    .tech-particle.ai {
+        box-shadow: none;
+        border: none;
+        background: rgba(0, 102, 204, 0.1);
     }
 }
 
-/* ============================================
-   LANDSCAPE ORIENTATION ON MOBILE
-   ============================================ */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-    .hero-section {
-        min-height: auto;
-        padding: 30px 0;
-    }
-
-    .navbar {
-        padding: 0.5rem 0;
-    }
-
-    .hero-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-}
-
-/* ============================================
-   ACCESSIBILITY - REDUCED MOTION
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-
-    .tech-particle,
-    .typing-animation,
-    .code-cursor {
-        display: none !important;
-    }
-
-    .hero-title::after {
-        animation: none;
-    }
-}
-
-/* ============================================
-   HIGH DPI DISPLAYS
-   ============================================ */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    /* Sharper text on high DPI displays */
-    body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Adjust shadow blur for high DPI */
-    .professional-card,
-    .tech-badge {
-        box-shadow: var(--shadow-sm);
-    }
-}
-
-/* ============================================
-   MOBILE-SPECIFIC ANIMATIONS
-   ============================================ */
-
-/* Mobile Float Animation for Lightweight Particles */
-@keyframes mobileFloat {
+/* Responsive animation keyframes */
+@keyframes techParticleFloat {
     0% {
-        transform: translateY(100vh) translateX(0px);
+        transform: translateY(100vh) translateX(-20px) rotate(0deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.5;
-    }
-    90% {
-        opacity: 0.5;
-    }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
     100% {
-        transform: translateY(-100px) translateX(20px);
+        transform: translateY(-100px) translateX(20px) rotate(360deg);
         opacity: 0;
     }
 }
 
-/* Mobile-Optimized Button Press Animation */
-@keyframes mobilePress {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.98); }
-    100% { transform: scale(1); }
-}
-
-/* Mobile Navigation Slide Animation */
-@keyframes mobileSlideIn {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
+/* Mobile-optimized animation */
+@media (max-width: 767.98px) {
+    @keyframes techParticleFloat {
+        0% {
+            transform: translateY(100vh) translateX(-10px) rotate(0deg);
+            opacity: 0;
+        }
+        15% { opacity: 0.5; }
+        85% { opacity: 0.5; }
+        100% {
+            transform: translateY(-80px) translateX(10px) rotate(180deg);
+            opacity: 0;
+        }
     }
 }
 
-/* Mobile Hero Text Animation */
-@keyframes mobileTextReveal {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile Card Entrance */
-@keyframes mobileCardSlide {
-    from {
-        transform: translateX(-30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
+/* Very small mobile - simplified animation */
+@media (max-width: 480px) {
+    @keyframes techParticleFloat {
+        0% {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+        20% { opacity: 0.4; }
+        80% { opacity: 0.4; }
+        100% {
+            transform: translateY(-60px);
+            opacity: 0;
+        }
     }
 }
 
-/* ============================================
-   MOBILE PROGRESSIVE ENHANCEMENT
-   ============================================ */
-
-/* Base Mobile Styles - Applied First */
-@media screen and (max-width: 768px) {
-    /* Improve text readability on mobile */
-    body {
-        font-size: 16px;
-        line-height: 1.5;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-    }
-
-    /* Prevent horizontal scroll */
-    html, body {
-        overflow-x: hidden;
-        width: 100%;
-    }
-
-    /* Mobile-first container */
-    .container-fluid {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
-    /* Mobile section spacing */
-    section {
-        padding: 3rem 0;
-    }
-
-    /* Mobile typography hierarchy */
-    .display-1 { font-size: 2.5rem; }
-    .display-2 { font-size: 2rem; }
-    .display-3 { font-size: 1.75rem; }
-    .display-4 { font-size: 1.5rem; }
-
-    /* Mobile hero optimization */
-    .hero-section {
-        padding: 2rem 0;
-        text-align: center;
-    }
-
-    .hero-content {
-        animation: mobileTextReveal 0.8s ease-out;
-    }
-
-    /* Mobile navigation improvements */
-    .navbar-collapse {
-        animation: mobileSlideIn 0.3s ease-out;
-    }
-
-    .navbar-nav {
-        text-align: center;
-        padding: 1rem 0;
-    }
-
-    .navbar-nav .nav-link {
-        padding: 1rem;
-        font-size: 1.1rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-nav .nav-link:last-child {
-        border-bottom: none;
-    }
-
-    /* Mobile cards optimization */
-    .professional-card {
-        animation: mobileCardSlide 0.6s ease-out;
-        margin-bottom: 2rem;
-    }
-
-    /* Mobile button improvements */
-    .btn {
-        touch-action: manipulation;
-        animation: mobilePress 0.1s ease when pressed;
-        min-height: 48px;
-        font-size: 1rem;
-        padding: 0.75rem 2rem;
-    }
-
-    /* Mobile form optimization */
-    .form-control {
-        min-height: 48px;
-        font-size: 16px; /* Prevents zoom on iOS */
-        padding: 0.75rem 1rem;
-    }
-
-    /* Mobile social links */
-    .social-links {
-        justify-content: center;
-        margin: 2rem 0;
-    }
-
-    .social-links a {
-        margin: 0.5rem;
-    }
-
-    /* Mobile tech badges */
-    .tech-badge {
-        margin: 0.25rem;
-        touch-action: manipulation;
-    }
+/* Magic particles container responsive */
+.magic-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
 }
 
-/* ============================================
-   MOBILE ACCESSIBILITY ENHANCEMENTS
-   ============================================ */
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .btn, .tech-badge, .professional-card {
-        border: 2px solid currentColor;
-    }
-
-    .hero-title {
-        color: currentColor;
-        -webkit-text-fill-color: currentColor;
-    }
-}
-
-/* Dark mode mobile optimization */
-@media (prefers-color-scheme: dark) and (max-width: 768px) {
-    :root {
-        --text-color: #e2e8f0;
-        --light-bg: #1a1a1a;
-        --white: #2d3748;
-        --border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    body {
-        background: #0f172a;
-        color: #e2e8f0;
-    }
-
-    .navbar {
-        background: rgba(15, 23, 42, 0.95) !important;
-    }
-
-    .professional-card {
-        background: #1e293b;
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-}
-
-/* ============================================
-   MOBILE PERFORMANCE OPTIMIZATIONS
-   ============================================ */
-
-/* Optimize animations for mobile performance */
-@media (max-width: 768px) {
-    * {
-        /* Use GPU acceleration sparingly on mobile */
+/* Performance optimization for mobile */
+@media (max-width: 767.98px) {
+    .magic-particles {
+        /* Reduce processing load on mobile */
         will-change: auto;
     }
-
-    .professional-card,
-    .tech-badge {
-        /* Only animate transforms and opacity on mobile */
-        transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    /* Simplify gradients for better performance */
-    .hero-title {
-        background: var(--primary-color);
-        -webkit-background-clip: initial;
-        -webkit-text-fill-color: initial;
-        background-clip: initial;
-        color: var(--primary-color);
-    }
-
-    /* Reduce shadow complexity */
-    .btn, .professional-card, .tech-badge {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn:hover, .professional-card:hover, .tech-badge:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
 }
 
-/* ============================================
-   MOBILE CONTENT PRIORITIZATION
-   ============================================ */
-
-/* Hide less important elements on very small screens */
-@media (max-width: 480px) {
-    .tech-particle,
-    .matrix-rain,
-    .binary-background,
-    .circuit-background {
+/* Hide particles on very low-end devices or when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+    .tech-particle {
         display: none !important;
     }
-
-    /* Simplify complex layouts */
-    .architecture-diagram,
-    .network-visualization {
-        display: none;
-    }
-
-    /* Show mobile-friendly alternatives */
-    .mobile-tech-stack {
-        display: block;
-    }
-
-    /* Optimize spacing for small screens */
-    .container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-    }
-
-    section {
-        padding: 2rem 0;
-    }
-
-    .professional-card {
-        padding: 1.25rem;
-    }
 }
 
-/* ============================================
-   MOBILE LOADING STATES
-   ============================================ */
-
-/* Mobile-optimized loading animation */
-@keyframes mobileLoading {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-.mobile-loading {
-    position: relative;
-    overflow: hidden;
-}
-
-.mobile-loading::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-    animation: mobileLoading 1.5s ease-in-out infinite;
-}
-
-/* ============================================
-   MOBILE INTERACTION STATES
-   ============================================ */
-
-/* Enhanced touch feedback */
-.btn:active,
-.tech-badge:active,
-.professional-card:active {
-    transform: scale(0.98);
-    transition: transform 0.1s ease;
-}
-
-/* Mobile focus states */
-.btn:focus,
-.nav-link:focus,
-.form-control:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
-}
-
-/* Mobile hover fallback for touch devices */
-@media (hover: none) {
-    .btn:hover,
-    .tech-badge:hover,
-    .professional-card:hover {
-        transform: none;
-        box-shadow: initial;
-    }
-
-    /* Use active states instead of hover */
-    .btn:active,
-    .tech-badge:active,
-    .professional-card:active {
-        background: var(--primary-dark);
-        transform: scale(0.98);
-    }
-}
-
-/* ============================================
-   MOBILE TYPOGRAPHY FINE-TUNING
-   ============================================ */
-
-/* Optimize font sizes for mobile readability */
-@media (max-width: 576px) {
-    body {
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    h1 { font-size: 1.75rem; line-height: 1.2; }
-    h2 { font-size: 1.5rem; line-height: 1.3; }
-    h3 { font-size: 1.25rem; line-height: 1.4; }
-    h4 { font-size: 1.1rem; line-height: 1.4; }
-    h5 { font-size: 1rem; line-height: 1.5; }
-    h6 { font-size: 0.9rem; line-height: 1.5; }
-
-    .hero-title {
-        font-size: 1.5rem;
-        line-height: 1.2;
-        margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin-bottom: 1.5rem;
-    }
-
-    /* Ensure code fonts are readable on mobile */
-    .code-font {
-        font-size: 0.8rem;
-        line-height: 1.4;
-    }
-}
-
-/* ============================================
-   NAVIGATION COMPREHENSIVE FIX
-   ============================================ */
-
-/* Enhanced Navigation - Base Styles */
-.navbar {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-bottom: 1px solid var(--border-color);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0.75rem 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-}
-
-.navbar.scrolled {
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12);
-    border-bottom: 1px solid rgba(0, 102, 204, 0.15);
-}
-
-/* Enhanced Navbar Brand */
-.navbar-brand {
-    font-family: var(--font-code) !important;
-    font-weight: 700;
-    font-size: var(--font-size-xl);
-    color: var(--primary-color) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    position: relative;
-    z-index: 1051;
-}
-
-.navbar-brand:hover,
-.navbar-brand:focus {
-    color: var(--code-color) !important;
-    transform: scale(1.05);
-    text-decoration: none;
-}
-
-/* Navigation Links Enhanced */
-.navbar-nav {
-    align-items: center;
-}
-
-.navbar-nav .nav-link {
-    font-weight: 500;
-    color: var(--text-color) !important;
-    margin: 0 var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-base) !important;
-    border-radius: var(--radius-base);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    text-decoration: none;
-    font-size: 0.95rem;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus,
-.navbar-nav .nav-link.active {
-    color: var(--primary-color) !important;
-    background: rgba(0, 102, 204, 0.08);
-    text-decoration: none;
-    transform: translateY(-1px);
-}
-
-/* Navigation Link Underline Animation */
-.navbar-nav .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -2px;
-    left: 50%;
-    background: linear-gradient(90deg, var(--primary-color), var(--code-color));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(-50%);
-    border-radius: 1px;
-}
-
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link:focus::after,
-.navbar-nav .nav-link.active::after {
-    width: 100%;
-}
-
-/* Mobile Navigation Toggler */
-.navbar-toggler {
-    border: none;
-    padding: 0.25rem 0.5rem;
-    background: transparent;
-    border-radius: var(--radius-base);
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 1052;
-}
-
-.navbar-toggler:focus,
-.navbar-toggler:active {
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
-    outline: none;
-    background: rgba(0, 102, 204, 0.05);
-}
-
-.navbar-toggler:not(.collapsed) {
-    background: rgba(0, 102, 204, 0.1);
-}
-
-/* Custom hamburger icon */
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%230066cc' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    transition: transform 0.3s ease;
-    width: 1.2em;
-    height: 1.2em;
-}
-
-.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
-    transform: rotate(90deg);
-}
-
-/* Fix navbar positioning and z-index issues */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-}
-
-
-/* Prevent navbar from interfering with page content */
-body {
-    padding-top: 76px; /* Account for fixed navbar */
-}
-
-@media (max-width: 991.98px) {
-    body {
-        padding-top: 70px; /* Adjust for mobile navbar height */
-    }
-}
-
-/* Ensure mobile menu doesn't interfere with page scroll */
-body.navbar-open {
-    overflow-x: hidden;
-}
-
-@media (max-width: 991.98px) {
-    body.navbar-open .navbar-collapse.show {
-        position: fixed;
-        left: 15px;
-        right: 15px;
-        top: 70px;
-        z-index: 1060;
+/* Power-saving mode detection */
+@media (max-width: 480px) and (max-height: 800px) {
+    .tech-particle {
+        /* Further reduce particles on small screens */
+        animation-duration: 4s;
+        opacity: 0.3;
     }
 }

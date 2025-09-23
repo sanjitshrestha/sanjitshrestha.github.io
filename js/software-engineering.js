@@ -1169,3 +1169,79 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 console.log('🎯 Software Engineering Portfolio JavaScript loaded successfully!');
+
+// Mobile-responsive tech particle system
+let techParticleCount = 0;
+let maxParticles = softwarePortfolio.getMaxParticles(); // Dynamic based on device
+let particleInterval;
+let isPageVisible = true;
+
+// Get optimal particle count based on device
+getMaxParticles() {
+    if (this.isMobile && window.innerWidth <= 480) {
+        return 3; // Very small mobile - minimal particles
+    } else if (this.isMobile) {
+        return 5; // Mobile - few particles
+    } else if (this.isTablet) {
+        return 8; // Tablet - moderate particles
+    } else {
+        return 12; // Desktop - full particles
+    }
+}
+
+// Get optimal particle creation frequency based on device
+getParticleFrequency() {
+    if (this.isMobile && window.innerWidth <= 480) {
+        return 4000; // Very slow on tiny screens
+    } else if (this.isMobile) {
+        return 3000; // Slower on mobile
+    } else if (this.isTablet) {
+        return 2000; // Medium on tablet
+    } else {
+        return 1200; // Fast on desktop
+    }
+}
+
+// Enhanced tech stack with mobile-optimized terms
+const modernTechStack = [
+    // Core Backend (high priority - always show)
+    { text: 'Java', category: 'java' },
+    { text: 'Spring Boot', category: 'spring' },
+    { text: 'Kotlin', category: 'java' },
+
+    // Cloud & Infrastructure
+    { text: 'AWS', category: 'cloud' },
+    { text: 'Docker', category: 'devops' },
+    { text: 'K8s', category: 'devops' }, // Shorter for mobile
+
+    // AI & Modern Tech (priority on larger screens)
+    ...(!this.isMobile || window.innerWidth > 480 ? [
+        { text: 'ChatGPT', category: 'ai' },
+        { text: 'OpenAI', category: 'ai' },
+        { text: 'ML', category: 'ai' },
+    ] : []),
+
+    // Frontend (medium priority)
+    ...(window.innerWidth > 576 ? [
+        { text: 'React', category: 'frontend' },
+        { text: 'Vue', category: 'frontend' },
+        { text: 'TypeScript', category: 'frontend' },
+    ] : []),
+
+    // Databases (show on tablet and up)
+    ...(window.innerWidth > 768 ? [
+        { text: 'PostgreSQL', category: 'database' },
+        { text: 'MongoDB', category: 'database' },
+        { text: 'Redis', category: 'database' },
+    ] : [{ text: 'SQL', category: 'database' }]),
+
+    // Advanced (desktop only)
+    ...(window.innerWidth >= 992 ? [
+        { text: 'Microservices', category: 'cloud' },
+        { text: 'Serverless', category: 'cloud' },
+        { text: 'CI/CD', category: 'devops' },
+        { text: 'Jenkins', category: 'devops' },
+        { text: 'GitHub Actions', category: 'devops' },
+    ] : [])
+];
+
