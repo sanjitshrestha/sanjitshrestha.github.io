@@ -1,0 +1,666 @@
+/*!
+ * Software Engineering Enhanced CSS - Professional Developer Portfolio
+ * Advanced animations, code aesthetics, and engineering-focused design
+ */
+
+/* Matrix Rain Animation for Software Engineering Feel */
+@keyframes matrixRain {
+    0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Binary Code Background Animation */
+@keyframes binaryFlow {
+    0% {
+        transform: translateX(-100vw) rotate(0deg);
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateX(100vw) rotate(360deg);
+        opacity: 0.1;
+    }
+}
+
+/* Code Typing Animation */
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+    0%, 50% { border-color: transparent; }
+    51%, 100% { border-color: var(--code-color); }
+}
+
+/* Terminal Glow Effect */
+@keyframes terminalGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2),
+                    0 0 20px rgba(0, 255, 0, 0.1),
+                    inset 0 0 20px rgba(0, 255, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.4),
+                    0 0 40px rgba(0, 255, 0, 0.2),
+                    inset 0 0 30px rgba(0, 255, 0, 0.2);
+    }
+}
+
+/* Circuit Board Pattern */
+.circuit-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+    background-image:
+        linear-gradient(90deg, rgba(0, 102, 204, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(0, 102, 204, 0.05) 1px, transparent 1px),
+        radial-gradient(circle at 20% 50%, rgba(0, 102, 204, 0.1) 2px, transparent 2px),
+        radial-gradient(circle at 80% 50%, rgba(255, 107, 53, 0.1) 2px, transparent 2px),
+        radial-gradient(circle at 40% 20%, rgba(0, 200, 81, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px, 50px 50px, 100px 100px, 100px 100px, 75px 75px;
+    animation: circuitFlow 20s linear infinite;
+}
+
+@keyframes circuitFlow {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 50px 50px, 50px 50px, 100px 100px, -100px -100px, 75px 75px; }
+}
+
+/* Software Engineering Typography */
+.code-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    background: linear-gradient(45deg, #0066cc, #ff6b35, #00c851);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.code-title::after {
+    content: '|';
+    color: var(--code-color);
+    animation: blinkCursor 1s infinite;
+    margin-left: 2px;
+}
+
+/* Terminal-style Code Blocks */
+.terminal-window {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    position: relative;
+    animation: terminalGlow 3s ease-in-out infinite;
+}
+
+.terminal-header {
+    background: #334155;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #475569;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot.red { background: #ef4444; }
+.terminal-dot.yellow { background: #f59e0b; }
+.terminal-dot.green { background: #10b981; }
+
+.terminal-title {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.terminal-body {
+    padding: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    min-height: 120px;
+}
+
+.terminal-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.terminal-prompt {
+    color: #10b981;
+    margin-right: 8px;
+}
+
+.terminal-command {
+    color: #60a5fa;
+}
+
+.terminal-output {
+    color: #f97316;
+    margin-left: 20px;
+}
+
+.terminal-comment {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Floating Code Elements */
+.floating-code {
+    position: fixed;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: rgba(0, 102, 204, 0.3);
+    pointer-events: none;
+    z-index: -1;
+    animation: codeFloat 15s linear infinite;
+}
+
+.floating-code.java { color: rgba(248, 152, 32, 0.3); }
+.floating-code.spring { color: rgba(109, 179, 63, 0.3); }
+.floating-code.aws { color: rgba(255, 153, 0, 0.3); }
+.floating-code.docker { color: rgba(36, 150, 237, 0.3); }
+
+@keyframes codeFloat {
+    0% {
+        transform: translateY(100vh) translateX(-50px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) translateX(50px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.matrix-column {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(0, 255, 0, 0.8);
+    white-space: nowrap;
+    animation: matrixRain 5s linear infinite;
+}
+
+/* Binary Background */
+.binary-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.binary-string {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: rgba(0, 102, 204, 0.1);
+    white-space: nowrap;
+    animation: binaryFlow 20s linear infinite;
+}
+
+/* Glowing Tech Badges */
+.tech-badge-glow {
+    background: var(--gradient-primary);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    margin: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+}
+
+.tech-badge-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.tech-badge-glow:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+}
+
+.tech-badge-glow:hover::before {
+    left: 100%;
+}
+
+/* Software Architecture Diagram */
+.architecture-diagram {
+    position: relative;
+    padding: 40px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 16px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.architecture-layer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    position: relative;
+}
+
+.architecture-layer::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background: var(--primary-color);
+}
+
+.architecture-layer:last-child::after {
+    display: none;
+}
+
+.layer-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.layer-tech {
+    display: flex;
+    gap: 10px;
+}
+
+/* Coding Statistics Display */
+.coding-stats {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+.coding-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0066cc, #ff6b35, #00c851);
+    animation: progressBar 3s ease-in-out infinite;
+}
+
+@keyframes progressBar {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    color: #94a3b8;
+}
+
+.stat-value {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.stat-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.stat-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #0066cc, #10b981);
+    border-radius: 2px;
+    animation: fillBar 2s ease-out;
+}
+
+@keyframes fillBar {
+    from { width: 0; }
+    to { width: var(--progress, 0%); }
+}
+
+/* Interactive Code Editor Mockup */
+.code-editor {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+.editor-header {
+    background: #334155;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #475569;
+}
+
+.editor-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.editor-tab {
+    background: #475569;
+    color: #e2e8f0;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.editor-tab.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.editor-action {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.editor-action.close { background: #ef4444; }
+.editor-action.minimize { background: #f59e0b; }
+.editor-action.maximize { background: #10b981; }
+
+.editor-body {
+    padding: 20px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    min-height: 200px;
+    line-height: 1.6;
+}
+
+.code-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.line-number {
+    color: #64748b;
+    margin-right: 20px;
+    width: 30px;
+    text-align: right;
+}
+
+.code-keyword { color: #f472b6; }
+.code-string { color: #34d399; }
+.code-comment { color: #94a3b8; }
+.code-function { color: #60a5fa; }
+.code-variable { color: #fbbf24; }
+
+/* Animated Network Connections */
+.network-visualization {
+    position: relative;
+    height: 300px;
+    background: radial-gradient(circle at center, rgba(0, 102, 204, 0.1) 0%, transparent 70%);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.network-node {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.5);
+    animation: nodePulse 2s ease-in-out infinite;
+}
+
+@keyframes nodePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.7;
+    }
+}
+
+.network-connection {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: dataFlow 3s ease-in-out infinite;
+}
+
+@keyframes dataFlow {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+}
+
+/* Professional Hover Effects */
+.professional-card-enhanced {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.professional-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0066cc, #ff6b35, #00c851);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.professional-card-enhanced:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+}
+
+.professional-card-enhanced:hover::before {
+    opacity: 1;
+}
+
+/* Responsive Design for Software Engineering Elements */
+@media (max-width: 768px) {
+    .terminal-window,
+    .code-editor {
+        margin: 10px 0;
+        border-radius: 8px;
+    }
+
+    .terminal-body,
+    .editor-body {
+        padding: 15px;
+        font-size: 12px;
+    }
+
+    .floating-code {
+        font-size: 12px;
+    }
+
+    .architecture-diagram {
+        padding: 20px;
+        margin: 10px 0;
+    }
+
+    .architecture-layer {
+        padding: 15px;
+        margin: 8px 0;
+    }
+
+    .layer-tech {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .coding-stats {
+        padding: 20px;
+    }
+
+    .stat-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stat-bar {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* Dark Theme Support for Software Engineering Elements */
+@media (prefers-color-scheme: dark) {
+    .architecture-diagram {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .architecture-layer {
+        background: rgba(30, 41, 59, 0.8);
+        color: #e2e8f0;
+    }
+
+    .professional-card-enhanced {
+        background: #1e293b;
+        color: #e2e8f0;
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    .floating-code,
+    .matrix-column,
+    .binary-string,
+    .network-node,
+    .network-connection {
+        animation: none;
+    }
+
+    .tech-badge-glow:hover {
+        transform: none;
+    }
+
+    .professional-card-enhanced:hover {
+        transform: translateY(-2px);
+    }
+}
