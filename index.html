@@ -1060,7 +1060,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <span class="tech-badge backend">Java Architect</span>
+                        <span class="tech-badge backend">Software Architect</span>
                         <span class="tech-badge backend">Spring Boot Expert</span>
                         <span class="tech-badge cloud">Cloud Native</span>
                         <span class="tech-badge database">Data Systems</span>
@@ -1125,64 +1125,96 @@
 
 <!-- Tech Particles Implementation Script -->
 <script>
-// Optimized Modern Tech Stack for floating particles
+// Enhanced Mobile-Responsive Tech Particle System
+// Optimized Modern Tech Stack for responsive particles
 const modernTechStack = [
-    // Backend & Languages
-    { text: 'Java 17+', category: 'java' },
+    // Core Backend (always show - high priority)
+    { text: 'Java', category: 'java' },
     { text: 'Spring Boot', category: 'spring' },
     { text: 'Kotlin', category: 'java' },
-    { text: 'TypeScript', category: 'frontend' },
-    { text: 'Python', category: 'ai' },
 
-    // Cloud & Infrastructure
-    { text: 'AWS Lambda', category: 'cloud' },
-    { text: 'Kubernetes', category: 'devops' },
+    // Cloud & Infrastructure (high priority)
+    { text: 'AWS', category: 'cloud' },
     { text: 'Docker', category: 'devops' },
-    { text: 'Microservices', category: 'cloud' },
-    { text: 'Serverless', category: 'cloud' },
+    { text: 'K8s', category: 'devops' }, // Shorter for mobile
 
-    // AI & Modern Tech
-    { text: 'ChatGPT API', category: 'ai' },
-    { text: 'OpenAI', category: 'ai' },
-    { text: 'Machine Learning', category: 'ai' },
-    { text: 'TensorFlow', category: 'ai' },
+    // AI & Modern Tech (show on larger screens)
+    ...(window.innerWidth > 480 ? [
+        { text: 'ChatGPT', category: 'ai' },
+        { text: 'OpenAI', category: 'ai' },
+        { text: 'ML', category: 'ai' },
+    ] : []),
 
-    // Frontend Modern
-    { text: 'React 18', category: 'frontend' },
-    { text: 'Next.js', category: 'frontend' },
-    { text: 'Vue 3', category: 'frontend' },
+    // Frontend (medium priority - tablet and up)
+    ...(window.innerWidth > 576 ? [
+        { text: 'React', category: 'frontend' },
+        { text: 'Vue', category: 'frontend' },
+        { text: 'TypeScript', category: 'frontend' },
+    ] : []),
 
-    // Databases & Data
-    { text: 'PostgreSQL', category: 'database' },
-    { text: 'MongoDB', category: 'database' },
-    { text: 'Redis', category: 'database' },
+    // Databases (tablet and up)
+    ...(window.innerWidth > 768 ? [
+        { text: 'PostgreSQL', category: 'database' },
+        { text: 'MongoDB', category: 'database' },
+        { text: 'Redis', category: 'database' },
+    ] : [{ text: 'SQL', category: 'database' }]),
 
-    // DevOps & Modern Tools
-    { text: 'GitHub Actions', category: 'devops' },
-    { text: 'Jenkins', category: 'devops' },
-
-    // Cloud Platforms
-    { text: 'AWS EKS', category: 'cloud' },
-    { text: 'Azure', category: 'cloud' },
-    { text: 'GCP', category: 'cloud' }
+    // Advanced (desktop only)
+    ...(window.innerWidth >= 992 ? [
+        { text: 'Microservices', category: 'cloud' },
+        { text: 'Serverless', category: 'cloud' },
+        { text: 'CI/CD', category: 'devops' },
+        { text: 'Jenkins', category: 'devops' },
+        { text: 'GitHub Actions', category: 'devops' },
+    ] : [])
 ];
 
+// Mobile-responsive particle system variables
 let techParticleCount = 0;
-let maxParticles = 8; // Reduced for better performance
 let particleInterval;
 let isPageVisible = true;
+
+// Get optimal particle count based on device
+function getMaxParticles() {
+    if (window.innerWidth <= 480) {
+        return 3; // Very small mobile - minimal particles
+    } else if (window.innerWidth <= 768) {
+        return 5; // Mobile - few particles
+    } else if (window.innerWidth <= 1024) {
+        return 8; // Tablet - moderate particles
+    } else {
+        return 12; // Desktop - full particles
+    }
+}
+
+// Get optimal particle creation frequency based on device
+function getParticleFrequency() {
+    if (window.innerWidth <= 480) {
+        return 4000; // Very slow on tiny screens
+    } else if (window.innerWidth <= 768) {
+        return 3000; // Slower on mobile
+    } else if (window.innerWidth <= 1024) {
+        return 2000; // Medium on tablet
+    } else {
+        return 1200; // Fast on desktop
+    }
+}
 
 // Performance optimization: Pause animations when page is not visible
 document.addEventListener('visibilitychange', function() {
     isPageVisible = !document.hidden;
     if (!isPageVisible && particleInterval) {
         clearInterval(particleInterval);
+        particleInterval = null;
     } else if (isPageVisible && !particleInterval) {
         startParticleSystem();
     }
 });
 
+// Mobile-responsive particle creation
 const createTechParticle = () => {
+    const maxParticles = getMaxParticles();
+
     if (!isPageVisible || techParticleCount >= maxParticles) return;
 
     const container = document.getElementById('magicParticles');
@@ -1195,47 +1227,105 @@ const createTechParticle = () => {
 
     particle.style.left = Math.random() * 100 + '%';
     particle.style.animationDelay = Math.random() * 1 + 's';
-    particle.style.animationDuration = (6 + Math.random() * 4) + 's'; // Faster animations
-    particle.style.willChange = 'transform, opacity'; // Optimize for animations
+
+    // Responsive animation duration
+    const animationDuration = window.innerWidth <= 480 ? 6 : window.innerWidth <= 768 ? 8 : 10;
+    particle.style.animationDuration = (animationDuration + Math.random() * 4) + 's';
+
+    // Performance optimization
+    particle.style.willChange = 'transform, opacity';
 
     container.appendChild(particle);
     techParticleCount++;
 
     // Cleanup after animation completes
+    const cleanupTime = window.innerWidth <= 480 ? 6000 : window.innerWidth <= 768 ? 8000 : 10000;
     setTimeout(() => {
         if (particle.parentNode) {
             particle.parentNode.removeChild(particle);
             techParticleCount--;
         }
-    }, 10000); // Reduced cleanup time
+    }, cleanupTime);
 };
 
+// Start responsive particle system
 const startParticleSystem = () => {
-    // Create particles less frequently for better performance
-    particleInterval = setInterval(createTechParticle, 1200);
+    if (particleInterval) {
+        clearInterval(particleInterval);
+    }
+
+    const frequency = getParticleFrequency();
+    particleInterval = setInterval(createTechParticle, frequency);
+
+    console.log(`🎆 Tech particles initialized for ${window.innerWidth}px screen (${getMaxParticles()} max particles)`);
 };
 
-// Optimized initialization
+// Responsive particle system initialization
 let initTimeout;
 document.addEventListener('DOMContentLoaded', function() {
+    // Create particle container
+    if (!document.getElementById('magicParticles')) {
+        const magicContainer = document.createElement('div');
+        magicContainer.className = 'magic-particles';
+        magicContainer.id = 'magicParticles';
+        document.body.appendChild(magicContainer);
+    }
+
     // Delay particle system until after page is fully loaded
     initTimeout = setTimeout(() => {
-        console.log('🚀 Initializing optimized tech particles...');
+        console.log('🚀 Initializing mobile-responsive tech particles...');
 
-        // Create fewer initial particles
-        for (let i = 0; i < 3; i++) {
-            setTimeout(createTechParticle, i * 300);
+        // Create fewer initial particles based on device
+        const initialCount = Math.min(3, getMaxParticles());
+        for (let i = 0; i < initialCount; i++) {
+            setTimeout(createTechParticle, i * 500);
         }
 
         startParticleSystem();
-        console.log('✨ Tech particles system activated!');
-    }, 1000); // Delay to ensure smooth loading
+        console.log('✨ Mobile-responsive tech particles system activated!');
+    }, 1000);
+});
+
+// Handle window resize for responsive particles
+window.addEventListener('resize', function() {
+    // Restart particle system with new settings
+    if (particleInterval) {
+        clearInterval(particleInterval);
+    }
+
+    // Update tech stack based on new screen size
+    setTimeout(() => {
+        startParticleSystem();
+        console.log(`📱 Particles updated for ${window.innerWidth}px screen`);
+    }, 250);
 });
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', function() {
     if (particleInterval) clearInterval(particleInterval);
     if (initTimeout) clearTimeout(initTimeout);
+});
+
+// Intersection Observer to pause particles when not visible
+const particleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            if (!particleInterval) startParticleSystem();
+        } else {
+            if (particleInterval) {
+                clearInterval(particleInterval);
+                particleInterval = null;
+            }
+        }
+    });
+}, { threshold: 0.1 });
+
+// Observe the hero section for particle optimization
+document.addEventListener('DOMContentLoaded', function() {
+    const heroSection = document.getElementById('home');
+    if (heroSection) {
+        particleObserver.observe(heroSection);
+    }
 });
 </script>
 
