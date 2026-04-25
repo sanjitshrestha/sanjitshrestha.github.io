@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-primary)}
+  .row{display:flex;flex-direction:column;gap:18px}
+  .spec{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:baseline}
+  .label{font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);text-transform:uppercase;letter-spacing:.12em}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6b7280}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:13px;color:#11151c}
+  .code{font-family:'JetBrains Mono',monospace;font-size:14px;background:#eef0f3;padding:.15em .4em;border-radius:2px}
+  .num{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:600;letter-spacing:-0.01em;font-variant-numeric:tabular-nums}
+  .quote{font-family:'Newsreader',serif;font-style:italic;font-size:24px;line-height:1.25;color:#11151c}
+</style></head>
+<body>
+<div class="row">
+  <div class="spec"><div class="label">Eyebrow · 11</div><div class="eyebrow">01 / WORK · STATUS · ACTIVE</div></div>
+  <div class="spec"><div class="label">Mono label · 13</div><div class="mono">latency.p99 = 142ms</div></div>
+  <div class="spec"><div class="label">Inline code</div><div>Use <span class="code">@Transactional</span> with read-only=true on query paths.</div></div>
+  <div class="spec"><div class="label">Stat numeral · 32</div><div class="num">1,042,318</div></div>
+  <div class="spec"><div class="label">Pull quote</div><div class="quote">"Design the failure mode first; the success path takes care of itself."</div></div>
+</div>
+</body></html>

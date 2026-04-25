@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans)}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .item{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .demo{width:80px;height:60px;background:#fff;border:1px solid var(--line-hairline)}
+  .l{font-family:var(--font-mono);font-size:11px;color:#6b7280;letter-spacing:.06em;text-transform:uppercase}
+  .v{font-family:var(--font-mono);font-size:11px;color:#11151c}
+  .head{font-family:var(--font-mono);font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;grid-column:1/-1}
+  .shadow1{box-shadow:0 1px 2px rgba(17,21,28,.06),0 1px 1px rgba(17,21,28,.04)}
+  .shadow2{box-shadow:0 4px 12px rgba(17,21,28,.06),0 1px 2px rgba(17,21,28,.04)}
+  .shadow3{box-shadow:0 12px 32px rgba(17,21,28,.08),0 2px 6px rgba(17,21,28,.04)}
+</style></head>
+<body>
+<div class="grid">
+  <div class="head">Radii</div>
+  <div class="item"><div class="demo" style="border-radius:0"></div><div class="l">none</div><div class="v">0px</div></div>
+  <div class="item"><div class="demo" style="border-radius:2px"></div><div class="l">xs</div><div class="v">2px</div></div>
+  <div class="item"><div class="demo" style="border-radius:4px"></div><div class="l">sm</div><div class="v">4px</div></div>
+  <div class="item"><div class="demo" style="border-radius:6px"></div><div class="l">md</div><div class="v">6px</div></div>
+  <div class="item"><div class="demo" style="border-radius:10px"></div><div class="l">lg</div><div class="v">10px</div></div>
+</div>
+<div style="height:24px"></div>
+<div class="grid">
+  <div class="head">Elevation · subtle by design</div>
+  <div class="item"><div class="demo"></div><div class="l">none</div><div class="v">hairline only</div></div>
+  <div class="item"><div class="demo shadow1"></div><div class="l">sm</div><div class="v">buttons</div></div>
+  <div class="item"><div class="demo shadow2"></div><div class="l">md</div><div class="v">menus</div></div>
+  <div class="item"><div class="demo shadow3"></div><div class="l">lg</div><div class="v">popovers</div></div>
+  <div class="item"><div class="demo" style="box-shadow:0 0 0 1px #00a352,0 0 24px rgba(0,163,82,.18)"></div><div class="l">glow</div><div class="v">focus</div></div>
+</div>
+</body></html>

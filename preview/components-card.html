@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-primary)}
+  .head{font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{background:#fff;border:1px solid #dde1e7;border-radius:6px;padding:20px;position:relative}
+  .card::before,.card::after{content:'';position:absolute;width:8px;height:8px;border-color:#c4cad3;border-style:solid}
+  .card::before{top:6px;left:6px;border-width:1px 0 0 1px}
+  .card::after{bottom:6px;right:6px;border-width:0 1px 1px 0}
+  .eye{font-family:var(--font-mono);font-size:11px;color:#6b7280;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+  .ttl{font-size:18px;font-weight:600;letter-spacing:-0.01em;margin-bottom:6px}
+  .desc{font-size:14px;color:#4b5563;line-height:1.55;margin-bottom:12px}
+  .meta{font-family:var(--font-mono);font-size:11px;color:#6b7280;display:flex;gap:14px;border-top:1px solid #eef0f3;padding-top:10px}
+  .meta b{color:#11151c;font-weight:500}
+</style></head>
+<body>
+<div class="head">Project card · default and hover</div>
+<div class="grid">
+  <div class="card">
+    <div class="eye">01 / FINTECH · 2024</div>
+    <div class="ttl">Payments platform</div>
+    <div class="desc">Architected ACH, Plaid, and Stripe rails for a US-based lender. 10K active users, $1M+ monthly volume.</div>
+    <div class="meta"><span><b>STACK</b> Spring · Postgres</span><span><b>UPTIME</b> 99.94%</span></div>
+  </div>
+  <div class="card" style="border-color:#2f3742">
+    <div class="eye">02 / LOGISTICS · 2023</div>
+    <div class="ttl">Fleet & billing engine</div>
+    <div class="desc">Real-time tracking and automated invoicing for a regional carrier. 14 services, 1M+ events/day.</div>
+    <div class="meta"><span><b>STACK</b> Kotlin · Kafka</span><span><b>SCALE</b> 1M+/day</span></div>
+  </div>
+</div>
+</body></html>

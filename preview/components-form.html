@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-primary)}
+  .head{font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .field label{display:block;font-family:var(--font-mono);font-size:11px;color:#6b7280;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+  .field input,.field textarea{width:100%;font-family:var(--font-sans);font-size:14px;border:1px solid #dde1e7;border-radius:4px;padding:10px 12px;color:#11151c;background:#fff;outline:none;box-sizing:border-box}
+  .field input:focus{border-color:#00a352;box-shadow:0 0 0 3px rgba(0,163,82,.15)}
+  .field.error input{border-color:#c1272d}
+  .field.error .hint{color:#c1272d;font-family:var(--font-mono);font-size:11px;margin-top:4px}
+  .field .hint{font-family:var(--font-mono);font-size:11px;color:#6b7280;margin-top:4px}
+  .check{display:flex;gap:8px;align-items:center;font-size:14px}
+  .box{width:14px;height:14px;border:1.5px solid #11151c;border-radius:2px;background:#11151c;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;line-height:1}
+</style></head>
+<body>
+<div class="head">Form fields · default · focus · error</div>
+<div class="grid">
+  <div class="field"><label>Name</label><input value="Sanjit Shrestha"><div class="hint">Default state</div></div>
+  <div class="field"><label>Email · focused</label><input value="forofficialsanjit@gmail.com" autofocus><div class="hint">3px signal halo on focus</div></div>
+  <div class="field error"><label>Phone</label><input value="+977 980-302"><div class="hint">Number incomplete · 10 digits required</div></div>
+  <div class="field"><label>Message</label><textarea rows="2" placeholder="Tell me about the project..."></textarea></div>
+</div>
+<div style="margin-top:18px" class="check"><span class="box">✓</span> Send a copy to my inbox</div>
+</body></html>

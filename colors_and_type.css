@@ -1,0 +1,253 @@
+/* =============================================================
+   Sanjit Shrestha — Engineering Portfolio Design System
+   Color & Type Tokens
+   ============================================================= */
+
+/* ----- Web fonts -------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap');
+
+:root {
+  /* ----- Neutral scale (cool gray, lightly tinted blue) ----- */
+  --neutral-0:   #ffffff;
+  --neutral-50:  #f7f8fa;
+  --neutral-100: #eef0f3;
+  --neutral-200: #dde1e7;
+  --neutral-300: #c4cad3;
+  --neutral-400: #9aa1ad;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #2f3742;
+  --neutral-800: #1c222c;
+  --neutral-900: #11151c;
+  --neutral-950: #0a0d12;
+
+  /* ----- Signal accent (engineering "go" green) ----- */
+  --signal-50:  #e9fbef;
+  --signal-100: #c6f4d4;
+  --signal-200: #8be8ad;
+  --signal-300: #4cd884;
+  --signal-400: #1bc266;
+  --signal-500: #00a352;   /* primary signal */
+  --signal-600: #008543;
+  --signal-700: #006734;
+  --signal-800: #014d28;
+
+  /* ----- Functional accents (sparingly used) ----- */
+  --amber-500:  #d97706;   /* warning / in-progress */
+  --crimson-500:#c1272d;   /* error / stop */
+  --azure-500:  #2563eb;   /* link, sometimes */
+
+  /* ----- Semantic foreground ----- */
+  --fg-primary:    var(--neutral-900);
+  --fg-secondary:  var(--neutral-600);
+  --fg-tertiary:   var(--neutral-500);
+  --fg-muted:      var(--neutral-400);
+  --fg-inverse:    var(--neutral-0);
+  --fg-accent:     var(--signal-600);
+
+  /* ----- Semantic background ----- */
+  --bg-canvas:     var(--neutral-0);     /* page */
+  --bg-surface:    var(--neutral-50);    /* card */
+  --bg-sunken:     var(--neutral-100);   /* well, code, well bg */
+  --bg-inverse:    var(--neutral-950);   /* dark blocks */
+  --bg-accent-soft:var(--signal-50);
+
+  /* ----- Lines & rules ----- */
+  --line-hairline: var(--neutral-200);   /* default border */
+  --line-strong:   var(--neutral-300);
+  --line-inverse:  var(--neutral-800);   /* on dark bg */
+
+  /* ----- Type families ----- */
+  --font-sans:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-serif:   'Newsreader', 'Charter', Georgia, 'Times New Roman', serif;
+
+  /* ----- Type scale (1.250 / major third, anchored at 16) ----- */
+  --text-2xs: 11px;
+  --text-xs:  12px;
+  --text-sm:  14px;
+  --text-md:  16px;
+  --text-lg:  18px;
+  --text-xl:  22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+  --text-5xl: 64px;
+  --text-6xl: 88px;
+
+  /* ----- Line heights ----- */
+  --lh-tight:    1.05;
+  --lh-snug:     1.2;
+  --lh-normal:   1.45;
+  --lh-relaxed:  1.6;
+
+  /* ----- Letter spacing ----- */
+  --ls-display:  -0.02em;
+  --ls-tight:    -0.01em;
+  --ls-normal:   0;
+  --ls-mono:     -0.005em;
+  --ls-label:    0.12em;     /* uppercase eyebrows */
+  --ls-mono-label: 0.06em;
+
+  /* ----- Spacing scale (4px base, relaxed where useful) ----- */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:   12px;
+  --sp-4:   16px;
+  --sp-5:   20px;
+  --sp-6:   24px;
+  --sp-8:   32px;
+  --sp-10:  40px;
+  --sp-12:  48px;
+  --sp-16:  64px;
+  --sp-20:  80px;
+  --sp-24:  96px;
+  --sp-32:  128px;
+
+  /* ----- Radii (engineering = restrained) ----- */
+  --r-none: 0;
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   10px;
+  --r-pill: 999px;
+
+  /* ----- Shadows (subtle; we lean on hairlines, not shadows) ----- */
+  --shadow-xs: 0 1px 1px rgba(17,21,28,0.04);
+  --shadow-sm: 0 1px 2px rgba(17,21,28,0.06), 0 1px 1px rgba(17,21,28,0.04);
+  --shadow-md: 0 4px 12px rgba(17,21,28,0.06), 0 1px 2px rgba(17,21,28,0.04);
+  --shadow-lg: 0 12px 32px rgba(17,21,28,0.08), 0 2px 6px rgba(17,21,28,0.04);
+  --shadow-glow: 0 0 0 1px var(--signal-500), 0 0 24px rgba(0,163,82,0.18);
+
+  /* ----- Layout ----- */
+  --container-max: 1200px;
+  --grid-gutter:   24px;
+
+  /* ----- Motion ----- */
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.2, 1);
+  --dur-fast:    120ms;
+  --dur-base:    220ms;
+  --dur-slow:    420ms;
+}
+
+/* ============================================================
+   Semantic typography classes  (use these in product code)
+   ============================================================ */
+
+.ds-display {
+  font-family: var(--font-serif);
+  font-size: var(--text-6xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.ds-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-4xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-display);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.ds-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-3xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.ds-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.ds-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  line-height: var(--lh-snug);
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.ds-lead {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--lh-relaxed);
+  font-weight: 400;
+  color: var(--fg-secondary);
+}
+
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--lh-relaxed);
+  font-weight: 400;
+  color: var(--fg-primary);
+}
+
+.ds-body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--lh-relaxed);
+  font-weight: 400;
+  color: var(--fg-secondary);
+}
+
+.ds-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  line-height: var(--lh-normal);
+  font-weight: 400;
+  color: var(--fg-tertiary);
+}
+
+/* "Eyebrow" labels: uppercase, mono, tracking */
+.ds-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.ds-mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: var(--ls-mono-label);
+  color: var(--fg-secondary);
+}
+
+.ds-code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  font-weight: 500;
+  letter-spacing: var(--ls-mono);
+  color: var(--fg-primary);
+  background: var(--bg-sunken);
+  padding: 0.1em 0.35em;
+  border-radius: var(--r-xs);
+}
+
+.ds-quote {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--fg-primary);
+  letter-spacing: var(--ls-tight);
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-primary)}
+  .grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+  .sw{display:flex;flex-direction:column;gap:6px}
+  .chip{height:80px;border-radius:var(--r-sm);border:1px solid var(--line-hairline);position:relative}
+  .star{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px #00a352}
+  .meta{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);letter-spacing:.04em}
+  .meta b{font-weight:500;color:var(--fg-primary);text-transform:uppercase;letter-spacing:.06em}
+  .lab{font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+</style></head>
+<body>
+<div class="lab">SIGNAL · GO · PRIMARY ACCENT</div>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:#e9fbef"></div><div class="meta"><b>50</b><span>E9FBEF</span></div></div>
+  <div class="sw"><div class="chip" style="background:#c6f4d4"></div><div class="meta"><b>100</b><span>C6F4D4</span></div></div>
+  <div class="sw"><div class="chip" style="background:#8be8ad"></div><div class="meta"><b>200</b><span>8BE8AD</span></div></div>
+  <div class="sw"><div class="chip" style="background:#4cd884"></div><div class="meta"><b>300</b><span>4CD884</span></div></div>
+  <div class="sw"><div class="chip" style="background:#1bc266"></div><div class="meta"><b>400</b><span>1BC266</span></div></div>
+  <div class="sw"><div class="chip" style="background:#00a352"><span class="star"></span></div><div class="meta"><b>500★</b><span>00A352</span></div></div>
+  <div class="sw"><div class="chip" style="background:#008543"></div><div class="meta"><b>600</b><span>008543</span></div></div>
+  <div class="sw"><div class="chip" style="background:#006734"></div><div class="meta"><b>700</b><span>006734</span></div></div>
+</div>
+</body></html>
