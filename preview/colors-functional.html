@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:var(--bg-canvas);font-family:var(--font-sans);color:var(--fg-primary)}
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .item{display:flex;gap:12px;align-items:center;border:1px solid var(--line-hairline);padding:12px;border-radius:6px}
+  .dot{width:32px;height:32px;border-radius:6px;flex-shrink:0}
+  .l1{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-tertiary)}
+  .l2{font-family:var(--font-mono);font-size:13px;color:var(--fg-primary);margin-top:4px}
+  .head{font-family:var(--font-mono);font-size:11px;color:var(--fg-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+</style></head>
+<body>
+<div class="head">FUNCTIONAL · STATE INDICATORS</div>
+<div class="row">
+  <div class="item"><div class="dot" style="background:#00a352"></div><div><div class="l1">Active · Go</div><div class="l2">signal-500</div></div></div>
+  <div class="item"><div class="dot" style="background:#d97706"></div><div><div class="l1">In progress</div><div class="l2">amber-500</div></div></div>
+  <div class="item"><div class="dot" style="background:#c1272d"></div><div><div class="l1">Down · Error</div><div class="l2">crimson-500</div></div></div>
+  <div class="item"><div class="dot" style="background:#2563eb"></div><div><div class="l1">Link · Info</div><div class="l2">azure-500</div></div></div>
+  <div class="item"><div class="dot" style="background:#9aa1ad"></div><div><div class="l1">Inactive</div><div class="l2">neutral-400</div></div></div>
+  <div class="item"><div class="dot" style="background:#11151c"></div><div><div class="l1">Foreground</div><div class="l2">neutral-900</div></div></div>
+</div>
+</body></html>
