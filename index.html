@@ -1317,9 +1317,9 @@ footer {
     <div class="hero-grid">
       <div>
         <div class="hero-meta">
-          <span class="eyebrow">Index · v<span id="dyn-year">2026</span> · Bhaktapur, NP</span>
+          <span class="eyebrow">Index · v<span id="dyn-footer-ver2">2026.04</span> · <span id="dyn-quarter">Q2·2026</span> · Bhaktapur, NP</span>
         </div>
-        <h1>Software<br>architect,<br><span class="light">six years</span> <span class="accent">in.</span></h1>
+        <h1>Software<br>architect,<br><span class="light"><span id="dyn-years-word">six</span> years</span> <span class="accent">in.</span></h1>
         <div class="hero-tag">SYSTEM&nbsp;//&nbsp;backend · cloud · ai-integration</div>
         <p class="hero-lead">
           I design backend systems that <b>pay people</b>, <b>move freight</b>, and <b>stay up</b>.
@@ -1342,7 +1342,7 @@ footer {
               <div class="phud-left">
                 <span class="phud-name">SANJIT&nbsp;SHRESTHA</span>
                 <span class="phud-sep">/</span>
-                <span class="phud-role">architect · 0x06y</span>
+                <span class="phud-role">architect · <span id="dyn-hex-exp">0x06y</span></span>
               </div>
               <span class="phud-remote">
                 <span class="phud-remote-dot"></span>REMOTE&nbsp;·&nbsp;NP
@@ -1366,7 +1366,7 @@ footer {
     </div>
 
     <div class="statstrip reveal">
-      <div class="stat" data-stat="years"><span class="l">Years active</span><span class="v" id="stat-years">06<small>+</small></span><div class="u">since 2019</div></div>
+      <div class="stat" data-stat="years"><span class="l">Years active</span><span class="v" id="stat-years">06<small>+</small></span><div class="u">since 2019 · <span id="dyn-career-days">0</span>d</div></div>
       <div class="stat"><span class="l">Projects shipped</span><span class="v">15<small>+</small></span><div class="u">production-grade</div></div>
       <div class="stat"><span class="l">Team size led</span><span class="v">30<small>+</small></span><div class="u">peak headcount</div></div>
       <div class="stat"><span class="l">P1 uptime</span><span class="v">99.9<small>%</small></span><div class="u">rolling 12-month</div></div>
@@ -1380,7 +1380,7 @@ footer {
     <div class="section-head reveal">
       <div>
         <span class="eyebrow" style="margin-bottom:18px;display:inline-flex">01 / Work</span>
-        <h2>Selected projects, <span class="em">2021&ndash;2025</span></h2>
+        <h2>Selected projects, <span class="em">2021&ndash;<span id="dyn-project-end">2025</span></span></h2>
       </div>
       <div class="meta">5 of 15 shown<br><span>Click to expand</span></div>
     </div>
@@ -1721,7 +1721,7 @@ footer {
         <div class="kv-readout" style="background:var(--neutral-950)">
           <div class="row"><div class="k">EMAIL</div><div class="v"><a href="mailto:forofficialsanjit@gmail.com">forofficialsanjit@gmail.com</a></div></div>
           <div class="row"><div class="k">PHONE</div><div class="v">+977 980-302-2719</div></div>
-          <div class="row"><div class="k">LOCATION</div><div class="v">Bhaktapur, Nepal · UTC+05:45</div></div>
+          <div class="row"><div class="k">LOCATION</div><div class="v">Bhaktapur, Nepal · <span id="dyn-npt-time">--:--:-- NPT</span></div></div>
           <div class="row"><div class="k">GITHUB</div><div class="v"><a href="https://github.com/sanjitshrestha" target="_blank">github.com/sanjitshrestha</a></div></div>
           <div class="row"><div class="k">LINKEDIN</div><div class="v"><a href="https://www.linkedin.com/in/sanjitshrestha/" target="_blank">/in/sanjitshrestha</a></div></div>
           <div class="row"><div class="k">STACKOVERFLOW</div><div class="v"><a href="https://stackoverflow.com/users/8775691/sanjit-shrestha" target="_blank">stackoverflow · 8775691</a></div></div>
@@ -1747,49 +1747,92 @@ footer {
 </footer>
 
 <script>
-/* ===== Dynamic date calculations ===== */
+/* ===== Dynamic date engine ===== */
 (function () {
-  const now       = new Date();
-  const CAREER    = new Date(2019, 10, 1);  // Nov 2019 — career start
-  const SYANSOFT  = new Date(2022, 8,  1);  // Sep 2022 — current employer
+  const now      = new Date();
+  const CAREER   = new Date(2019, 10, 1);  // Nov 2019 — career start
+  const SYANSOFT = new Date(2022,  8, 1);  // Sep 2022 — current employer
 
-  const MS_YEAR = 365.25 * 24 * 3600 * 1000;
+  const MS_YEAR  = 365.25 * 24 * 3600 * 1000;
   const MS_MONTH = 30.44  * 24 * 3600 * 1000;
+  const MS_DAY   = 24 * 3600 * 1000;
 
-  // Total career years (floor)
-  const yearsTotal = Math.floor((now - CAREER) / MS_YEAR);
+  // ── Career metrics ──────────────────────────────────────────
+  const msCareer   = now - CAREER;
+  const yearsTotal = Math.floor(msCareer / MS_YEAR);
+  const monthExtra = Math.floor((msCareer % MS_YEAR) / MS_MONTH);
+  const daysTotal  = Math.floor(msCareer / MS_DAY);
 
-  // SyanSoft tenure
+  // ── Current employer tenure ──────────────────────────────────
   const msTenure = now - SYANSOFT;
   const yTenure  = Math.floor(msTenure / MS_YEAR);
   const mTenure  = Math.round((msTenure % MS_YEAR) / MS_MONTH);
   const tenureTxt = (yTenure > 0 ? yTenure + 'y ' : '') + mTenure + 'mo';
 
-  // Month name for stack-updated
+  // ── Year in English words ────────────────────────────────────
+  const YEAR_WORDS = ['zero','one','two','three','four','five','six',
+                      'seven','eight','nine','ten','eleven','twelve',
+                      'thirteen','fourteen','fifteen'];
+  const yearsWord = YEAR_WORDS[yearsTotal] || yearsTotal + '';
+
+  // ── Quarter ──────────────────────────────────────────────────
+  const quarter    = Math.ceil((now.getMonth() + 1) / 3);
+  const quarterStr = 'Q' + quarter + '\u00B7' + now.getFullYear();
+
+  // ── Hex experience notation ──────────────────────────────────
+  const hexYears = '0x' + yearsTotal.toString(16).toUpperCase().padStart(2, '0') + 'y';
+
+  // ── Month names ──────────────────────────────────────────────
   const MONTHS = ['January','February','March','April','May','June',
                   'July','August','September','October','November','December'];
 
-  // Footer version: YYYY.MM
+  // ── Version string YYYY.MM ───────────────────────────────────
   const mm = String(now.getMonth() + 1).padStart(2, '0');
   const versionStr = now.getFullYear() + '.' + mm;
 
-  // Hex years e.g. 0x07y
-  const hexYears = '0x' + yearsTotal.toString(16).toUpperCase().padStart(2, '0') + 'y';
-
-  // Apply
+  // ── Apply all static IDs ─────────────────────────────────────
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
-  set('dyn-year',        now.getFullYear());
-  set('dyn-footer-year', now.getFullYear());
-  set('dyn-footer-ver',  versionStr);
-  set('dyn-hex-exp',     hexYears);
-  set('dyn-tenure',      tenureTxt);
-  set('dyn-stack-date',  MONTHS[now.getMonth()] + ' ' + now.getFullYear());
-  set('dyn-exp-years',   yearsTotal);
+  set('dyn-year',         now.getFullYear());
+  set('dyn-footer-year',  now.getFullYear());
+  set('dyn-footer-ver',   versionStr);
+  set('dyn-footer-ver2',  versionStr);
+  set('dyn-quarter',      quarterStr);
+  set('dyn-hex-exp',      hexYears);
+  set('dyn-tenure',       tenureTxt);
+  set('dyn-stack-date',   MONTHS[now.getMonth()] + ' ' + now.getFullYear());
+  set('dyn-exp-years',    yearsTotal);
+  set('dyn-years-word',   yearsWord);
+  set('dyn-project-end',  now.getFullYear());
+  set('dyn-career-days',  daysTotal.toLocaleString());
 
-  // Update the years-active stat source value (read by counter animation later)
+  // ── Stat counter source ──────────────────────────────────────
   const statYears = document.getElementById('stat-years');
   if (statYears) statYears.firstChild.textContent = String(yearsTotal).padStart(2, '0');
+
+  // ── Meta description ─────────────────────────────────────────
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.setAttribute('content',
+    meta.getAttribute('content').replace(/\d+\+?\s*years?/i, yearsTotal + '+ years'));
+
+  // ── CV link year ─────────────────────────────────────────────
+  document.querySelectorAll('a[href*="CV"]').forEach(a => {
+    a.href = a.href.replace(/CV \d{4}/, 'CV ' + now.getFullYear());
+  });
+
+  // ── Live Nepal time clock (UTC+05:45) ────────────────────────
+  function tickNPT() {
+    const el = document.getElementById('dyn-npt-time');
+    if (!el) return;
+    const utcMs = Date.now() + new Date().getTimezoneOffset() * 60000;
+    const npt   = new Date(utcMs + (5 * 3600 + 45 * 60) * 1000);
+    const hh    = String(npt.getHours()).padStart(2, '0');
+    const min   = String(npt.getMinutes()).padStart(2, '0');
+    const ss    = String(npt.getSeconds()).padStart(2, '0');
+    el.textContent = hh + ':' + min + ':' + ss + ' NPT';
+  }
+  tickNPT();
+  setInterval(tickNPT, 1000);
 })();
 
 // ===== Scroll progress bar =====
