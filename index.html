@@ -569,6 +569,681 @@ nav.top {
 .kv-readout .v a  { transition: color 120ms; }
 .kv-readout .v a:hover { color: var(--signal-400); }
 
+/* ============================================================
+   Digital ID card (flip)
+   ISO-7810 ID-1 aspect ratio · 3D flip · mouse parallax
+   ============================================================ */
+.id-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  aspect-ratio: 1.586 / 1;
+  perspective: 1400px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  /* Cursor coordinates — driven by JS, consumed by .id-holo specular */
+  --mx: 50%;
+  --my: 50%;
+}
+.id-card:focus-visible { outline: 2px solid var(--signal-500); outline-offset: 4px; border-radius: 14px; }
+
+.id-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* Cinematic ease — slightly anticipatory dwell, then resolve */
+  transition: transform 920ms cubic-bezier(.65,.05,.25,1);
+  will-change: transform;
+}
+.id-card.flipped .id-card-inner { transform: rotateY(180deg); }
+
+.id-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.04);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 14px;
+  font-family: var(--font-mono);
+  letter-spacing: .04em;
+  /* Multi-layer bevel: top highlight, bottom shadow, hairline rim,
+     deep ambient + crisp contact shadow */
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.65),
+    inset  1px 0 0 rgba(255,255,255,.035),
+    inset -1px 0 0 rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 1px 0 rgba(255,255,255,.05),
+    0 30px 64px -8px rgba(0,0,0,.55),
+    0 12px 24px -4px rgba(0,0,0,.35),
+    0 4px 8px rgba(0,0,0,.20);
+}
+.id-card-front {
+  background:
+    /* cinematic corner vignette */
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.32) 100%),
+    /* anisotropic brushed-metal hairlines */
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(255,255,255,.014) 2px,
+                              rgba(255,255,255,.014) 3px),
+    /* subtle warm-green halo top-left */
+    radial-gradient(ellipse at 22% -10%, rgba(0,200,83,.10) 0%, transparent 55%),
+    /* obsidian gradient */
+    linear-gradient(140deg, #20272f 0%, #0c1118 60%, #06090d 100%);
+}
+.id-card-back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.32) 100%),
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(255,255,255,.012) 2px,
+                              rgba(255,255,255,.012) 3px),
+    radial-gradient(ellipse at 78% 110%, rgba(0,128,255,.05) 0%, transparent 55%),
+    linear-gradient(180deg, #141a22 0%, #0a0d12 70%, #060a0f 100%);
+}
+/* Schematic grid — softer to let the brushed pattern read */
+.id-card-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right,  rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 14px 14px;
+  pointer-events: none;
+}
+/* Refined corner crosshairs — 8px hooks, lower opacity */
+.id-card-face::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 10px;
+  pointer-events: none;
+  background:
+    linear-gradient(to right,  rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) top left/10px 1px no-repeat,
+    linear-gradient(to bottom, rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) top left/1px 10px no-repeat,
+    linear-gradient(to left,   rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) top right/10px 1px no-repeat,
+    linear-gradient(to bottom, rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) top right/1px 10px no-repeat,
+    linear-gradient(to right,  rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) bottom left/10px 1px no-repeat,
+    linear-gradient(to top,    rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) bottom left/1px 10px no-repeat,
+    linear-gradient(to left,   rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) bottom right/10px 1px no-repeat,
+    linear-gradient(to top,    rgba(0,200,83,.55) 0, rgba(0,200,83,.55) 8px, transparent 8px) bottom right/1px 10px no-repeat;
+  opacity: .4;
+}
+
+/* Cursor-tracked specular highlight — the Apple Card effect.
+   JS sets --mx / --my; this layer paints a soft round hotspot
+   that follows the pointer across the card. */
+.id-holo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  background:
+    radial-gradient(circle 240px at var(--mx) var(--my),
+                    rgba(255,255,255,.14) 0%,
+                    rgba(0,200,83,.06) 28%,
+                    transparent 58%);
+  mix-blend-mode: screen;
+  transition: opacity 260ms var(--ease);
+}
+.id-card:hover .id-holo,
+.id-card:focus-visible .id-holo { opacity: 1; }
+
+/* Holographic iridescent foil — Pokemon-card style.
+   Cursor position shifts the rainbow's background-position,
+   creating the illusion that light is refracting off foil. */
+.id-rainbow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(115deg,
+    transparent 0%,
+    rgba(255,100,200,.18)  18%,
+    rgba(255,220,90,.18)   30%,
+    rgba(100,255,180,.18)  45%,
+    rgba(90,200,255,.18)   60%,
+    rgba(190,130,255,.18)  75%,
+    transparent 92%);
+  background-size: 220% 100%;
+  background-position: calc(100% - var(--mx, 50%)) 50%;
+  mix-blend-mode: color-dodge;
+  opacity: 0;
+  transition: opacity 320ms var(--ease);
+}
+.id-card:hover .id-rainbow,
+.id-card:focus-visible .id-rainbow { opacity: 1; }
+
+/* Hover lift + press feedback (3D rise / push) */
+.id-card-inner { will-change: transform; }
+.id-card.is-pressing .id-card-inner {
+  transform: translateZ(-10px) scale(.985) !important;
+  transition: transform 130ms cubic-bezier(.4,0,.2,1) !important;
+}
+
+/* Boot sequence — children of the front face fade up sequentially
+   when the card mounts. Only the FRONT runs the boot sequence;
+   the back face is revealed by the flip itself.
+   NOTE: both rules carry the same :not() filter so specificity
+   matches and .booted wins by adding the extra .booted class. */
+.id-card .id-card-front > *:not(.id-holo):not(.id-rainbow) {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 360ms var(--ease), transform 360ms var(--ease);
+}
+.id-card.booted .id-card-front > *:not(.id-holo):not(.id-rainbow) {
+  opacity: 1;
+  transform: translateY(0);
+}
+.id-card.booted .id-card-front .id-top         { transition-delay: 80ms; }
+.id-card.booted .id-card-front .id-chip-wrap   { transition-delay: 220ms; }
+.id-card.booted .id-card-front .id-number      { transition-delay: 340ms; }
+.id-card.booted .id-card-front .id-identity    { transition-delay: 460ms; }
+.id-card.booted .id-card-front .id-footer-row  { transition-delay: 580ms; }
+.id-card.booted .id-card-front .id-flip-hint   { transition-delay: 720ms; }
+
+/* NFC ripple — only animates on hover (motion-budget respectful) */
+.id-nfc { position: relative; }
+.id-nfc-ripple {
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%) scale(.6);
+  border-radius: 50%;
+  border: 1px solid var(--signal-500);
+  opacity: 0;
+  pointer-events: none;
+}
+.id-card:hover .id-nfc-ripple {
+  animation: nfc-ripple 1.8s var(--ease) infinite;
+}
+@keyframes nfc-ripple {
+  0%   { opacity: .8; transform: translateY(-50%) scale(.5); border-color: rgba(0,200,83,.8); }
+  100% { opacity: 0;  transform: translateY(-50%) scale(2.6); border-color: rgba(0,200,83,0); }
+}
+
+/* Holographic security seal — conic rainbow, rotates softly on hover.
+   Lives on the back face (where real cards place anti-counterfeit holograms). */
+.id-seal {
+  position: absolute;
+  bottom: 30px;
+  right: 14px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.6) 0%, transparent 38%),
+    conic-gradient(from 0deg,
+                   #ff6ec7 0%,
+                   #f9d423 18%,
+                   #00ffa3 36%,
+                   #00d4ff 54%,
+                   #b388ff 72%,
+                   #ff6ec7 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.30),
+    inset 0 0 6px rgba(0,0,0,.4),
+    0 0 6px rgba(255,255,255,.08),
+    0 2px 6px rgba(0,0,0,.4);
+  z-index: 3;
+  opacity: .92;
+  transform: rotate(0deg);
+  transition: transform 1400ms cubic-bezier(.2,.7,.2,1), opacity 280ms var(--ease);
+}
+.id-card.flipped .id-seal { transform: rotate(360deg); }
+.id-seal::after {
+  /* tiny embossed "✦" mark in the center for that engraved-stamp look */
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 60%);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+}
+
+/* Micro-text security strip — repeating ID along the bottom of the front face.
+   Real anti-counterfeit feature on premium cards: text too small to forge cleanly. */
+.id-microtext {
+  position: absolute;
+  bottom: 2px;
+  left: 14px;
+  right: 60px;
+  height: 7px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.18);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 7px;
+}
+
+/* Tier watermark — large faint italic word stamped diagonally on the back face. */
+.id-tier-watermark {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  font-family: var(--font-serif);
+  font-size: 54px;
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255,255,255,.028);
+  letter-spacing: .02em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+}
+
+/* Magstripe data stream — only runs when back face is the visible one */
+.id-magstripe { overflow: hidden; display: flex; align-items: center; }
+.id-magstripe-stream {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.10);
+  white-space: nowrap;
+  padding-left: 100%;
+  text-shadow: 0 0 4px rgba(0,200,83,.18);
+  animation: stream-scroll 26s linear infinite;
+  animation-play-state: paused;
+}
+.id-card.flipped .id-magstripe-stream { animation-play-state: running; }
+@keyframes stream-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* Top row */
+.id-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.id-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -.01em;
+}
+.id-brand img { width: 18px; height: 18px; }
+.id-brand .slash { color: var(--signal-500); }
+.id-nfc {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--neutral-400);
+  font-size: 8.5px;
+  letter-spacing: .18em;
+}
+.id-nfc svg { width: 14px; height: 14px; color: var(--neutral-300); }
+
+/* Chip wrapper — clips a sweeping highlight on hover */
+.id-chip-wrap {
+  position: relative;
+  width: 44px;
+  height: 34px;
+  margin-top: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
+}
+.id-chip {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.id-chip-wrap::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 80%;
+  height: 200%;
+  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.55) 50%, transparent 75%);
+  transform: skewX(-12deg);
+  transition: left 1100ms var(--ease);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+.id-card:hover .id-chip-wrap::after { left: 130%; }
+
+/* Card "number" — emp/issued style identifier, embossed */
+.id-number {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .22em;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  gap: 10px;
+  /* Embossed text: dark shadow below, faint highlight above */
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.65),
+    0 -1px 0 rgba(255,255,255,.05),
+    0 0 8px rgba(0,0,0,.3);
+}
+.id-number .seg { display: inline-block; }
+.id-number .seg.dim {
+  color: var(--neutral-500);
+  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+}
+
+/* Brand + NFC label — subtle emboss */
+.id-brand { text-shadow: 0 1px 0 rgba(0,0,0,.55); }
+
+/* Identity row — HOLDER + ROLE side-by-side, pushed to lower section */
+.id-identity {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: end;
+}
+.id-label {
+  font-size: 7.5px;
+  letter-spacing: .2em;
+  color: var(--neutral-500);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+.id-holder {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.55), 0 -1px 0 rgba(255,255,255,.04);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+.id-role-value {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  color: var(--signal-300);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 12px rgba(0,200,83,.25);
+}
+
+/* Footer row — GitHub handle + status */
+.id-footer-row {
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.id-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--neutral-200);
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: color 200ms var(--ease);
+  min-width: 0;
+}
+.id-github svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  color: var(--neutral-300);
+  transition: color 200ms var(--ease);
+}
+.id-github:hover { color: var(--signal-400); }
+.id-github:hover svg { color: var(--signal-400); }
+.id-github .handle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.id-status {
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  color: var(--signal-500);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.id-status .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, #7dffc0 0%, var(--signal-400) 45%, var(--signal-600) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.25),
+    0 0 0 1.5px rgba(0,0,0,.6),
+    0 0 0 3px rgba(0,200,83,.28),
+    0 0 8px rgba(0,200,83,.5);
+  animation: id-dot-pulse 2.6s var(--ease) infinite;
+}
+@keyframes id-dot-pulse {
+  0%,100% {
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.25),
+      0 0 0 1.5px rgba(0,0,0,.6),
+      0 0 0 3px rgba(0,200,83,.28),
+      0 0 8px rgba(0,200,83,.5);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.25),
+      0 0 0 1.5px rgba(0,0,0,.6),
+      0 0 0 6px rgba(0,200,83,.04),
+      0 0 12px rgba(0,200,83,.3);
+  }
+}
+
+/* Flip hint */
+.id-flip-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 14px;
+  font-size: 7.5px;
+  letter-spacing: .22em;
+  color: var(--neutral-500);
+  opacity: .8;
+  z-index: 2;
+  transition: color 200ms var(--ease), opacity 200ms var(--ease);
+}
+.id-card:hover .id-flip-hint { color: var(--signal-500); opacity: 1; }
+
+/* ===== Back face ===== */
+.id-magstripe {
+  height: 38px;
+  background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+  margin: -18px -20px 14px;
+  position: relative;
+  z-index: 1;
+}
+.id-magstripe::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,.06);
+  transform: translateY(-.5px);
+}
+.id-magstripe::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,.04);
+}
+
+.id-back-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+  min-height: 0;
+}
+
+.id-sig-row {
+  display: grid;
+  grid-template-columns: 1fr 68px;
+  gap: 10px;
+  align-items: stretch;
+}
+.id-sig {
+  border-radius: 3px;
+  padding: 5px 10px 6px;
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.045) 4px,
+      rgba(255,255,255,.085) 4px,
+      rgba(255,255,255,.085) 8px
+    );
+}
+.id-sig-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -.01em;
+  text-shadow: 0 1px 0 rgba(0,0,0,.4);
+}
+.id-sig-label {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: .2em;
+  color: var(--neutral-500);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+.id-cvv {
+  background: var(--neutral-100);
+  border-radius: 3px;
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.id-cvv-label {
+  font-size: 7px;
+  letter-spacing: .22em;
+  color: var(--neutral-600);
+  text-transform: uppercase;
+}
+.id-cvv-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--neutral-900);
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.id-back-meta {
+  display: grid;
+  gap: 3px;
+}
+.id-back-meta .id-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 8px;
+  font-size: 9.5px;
+  align-items: baseline;
+}
+.id-back-meta .id-row .k {
+  color: var(--neutral-500);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.id-back-meta .id-row .v {
+  color: #fff;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.id-back-meta .id-row .v b {
+  color: var(--signal-400);
+  font-weight: 500;
+}
+
+.id-fineprint {
+  margin-top: auto;
+  font-size: 7px;
+  line-height: 1.5;
+  color: var(--neutral-500);
+  letter-spacing: .04em;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* Responsive — card stays sharp on narrower hero panels */
+@media (max-width: 600px) {
+  .id-card-face { padding: 14px 16px 12px; }
+  .id-chip { width: 38px; height: 30px; }
+  .id-number { font-size: 12px; letter-spacing: .18em; }
+  .id-holder { font-size: 11px; }
+  .id-magstripe { height: 30px; margin: -14px -16px 10px; }
+  .id-sig-name { font-size: 16px; }
+  .id-back-meta .id-row { grid-template-columns: 60px 1fr; font-size: 9px; }
+}
+
 /* ===== Stat strip ===== */
 .statstrip {
   margin-top: var(--sp-8);
@@ -1577,6 +2252,203 @@ html[data-theme-switching] *::after {
   text-shadow: none;
 }
 
+/* ============================================================
+   Digital ID card — light theme. Off-white card face, dark text.
+   Magstripe stays dark (it's a stripe, that's what a stripe is).
+   ============================================================ */
+[data-theme="light"] .id-card-face {
+  border-color: rgba(17,21,28,.06);
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(17,21,28,.12),
+    inset  1px 0 0 rgba(255,255,255,.4),
+    inset -1px 0 0 rgba(17,21,28,.06),
+    inset 0 0 0 1px rgba(17,21,28,.04),
+    0 1px 0 rgba(255,255,255,.6),
+    0 18px 40px -8px rgba(17,21,28,.12),
+    0 8px 16px -4px rgba(17,21,28,.08),
+    0 2px 4px rgba(17,21,28,.05);
+}
+[data-theme="light"] .id-card-front {
+  background:
+    /* brushed-paper hairlines */
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(17,21,28,.012) 2px,
+                              rgba(17,21,28,.012) 3px),
+    radial-gradient(ellipse at 22% -10%, rgba(0,163,82,.06) 0%, transparent 55%),
+    linear-gradient(140deg, #ffffff 0%, #f4f5f7 60%, #eaecf0 100%);
+}
+[data-theme="light"] .id-card-back {
+  background:
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(17,21,28,.01) 2px,
+                              rgba(17,21,28,.01) 3px),
+    radial-gradient(ellipse at 78% 110%, rgba(17,21,28,.05) 0%, transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f4f5f7 100%);
+}
+[data-theme="light"] .id-card-face::before {
+  background-image:
+    linear-gradient(to right,  rgba(17,21,28,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17,21,28,.05) 1px, transparent 1px);
+}
+[data-theme="light"] .id-card-face::after {
+  background:
+    linear-gradient(to right,  rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) top left/10px 1px no-repeat,
+    linear-gradient(to bottom, rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) top left/1px 10px no-repeat,
+    linear-gradient(to left,   rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) top right/10px 1px no-repeat,
+    linear-gradient(to bottom, rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) top right/1px 10px no-repeat,
+    linear-gradient(to right,  rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) bottom left/10px 1px no-repeat,
+    linear-gradient(to top,    rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) bottom left/1px 10px no-repeat,
+    linear-gradient(to left,   rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) bottom right/10px 1px no-repeat,
+    linear-gradient(to top,    rgba(0,163,82,.6) 0, rgba(0,163,82,.6) 8px, transparent 8px) bottom right/1px 10px no-repeat;
+  opacity: .4;
+}
+/* Cursor-tracked specular — dimmer on light surface, multiply blend */
+[data-theme="light"] .id-holo {
+  background:
+    radial-gradient(circle 240px at var(--mx) var(--my),
+                    rgba(17,21,28,.08) 0%,
+                    rgba(0,163,82,.05) 30%,
+                    transparent 60%);
+  mix-blend-mode: multiply;
+}
+/* Holographic rainbow — toned down + multiply blend on light surface */
+[data-theme="light"] .id-rainbow {
+  background: linear-gradient(115deg,
+    transparent 0%,
+    rgba(220,40,140,.14)  18%,
+    rgba(220,170,30,.14)  30%,
+    rgba(30,180,120,.14)  45%,
+    rgba(30,140,220,.14)  60%,
+    rgba(150,80,220,.14)  75%,
+    transparent 92%);
+  background-size: 220% 100%;
+  mix-blend-mode: multiply;
+}
+[data-theme="light"] .id-card:hover .id-rainbow { opacity: .85; }
+/* Number embossing inverts on light */
+[data-theme="light"] .id-number {
+  color: var(--neutral-900);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.7),
+    0 -1px 0 rgba(0,0,0,.04);
+}
+[data-theme="light"] .id-number .seg.dim {
+  color: var(--neutral-400);
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+[data-theme="light"] .id-holder {
+  color: var(--neutral-900);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.7),
+    0 -1px 0 rgba(0,0,0,.04);
+}
+[data-theme="light"] .id-brand { text-shadow: 0 1px 0 rgba(255,255,255,.7); }
+[data-theme="light"] .id-role-value {
+  color: var(--signal-600);
+  text-shadow: 0 0 12px rgba(0,163,82,.18);
+}
+/* Status dot — light theme variant */
+[data-theme="light"] .id-status .dot {
+  background: radial-gradient(circle at 32% 32%, #6fe5a4 0%, var(--signal-500) 45%, var(--signal-700, #006734) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.5),
+    0 0 0 1.5px rgba(0,0,0,.15),
+    0 0 0 3px rgba(0,163,82,.22),
+    0 0 8px rgba(0,163,82,.35);
+}
+/* Chip glint less aggressive on light bg */
+[data-theme="light"] .id-card:hover .id-chip-wrap::after { left: 130%; }
+
+/* Micro-text strip inverts to dark on light surface */
+[data-theme="light"] .id-microtext { color: rgba(17,21,28,.20); }
+
+/* Tier watermark — darker tint on light card */
+[data-theme="light"] .id-tier-watermark {
+  color: rgba(17,21,28,.038);
+  text-shadow: 0 1px 0 rgba(255,255,255,.4);
+}
+
+/* Holographic seal — slightly toned down on light card */
+[data-theme="light"] .id-seal {
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.6),
+    inset 0 0 6px rgba(0,0,0,.3),
+    0 0 4px rgba(0,0,0,.06),
+    0 2px 6px rgba(17,21,28,.18);
+  opacity: .88;
+}
+[data-theme="light"] .id-seal::after {
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 60%);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.18);
+}
+
+/* Front-face cinematic vignette — switch to light-friendly version */
+[data-theme="light"] .id-card-front {
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(17,21,28,.10) 100%),
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(17,21,28,.012) 2px,
+                              rgba(17,21,28,.012) 3px),
+    radial-gradient(ellipse at 22% -10%, rgba(0,163,82,.06) 0%, transparent 55%),
+    linear-gradient(140deg, #ffffff 0%, #f4f5f7 60%, #eaecf0 100%);
+}
+[data-theme="light"] .id-card-back {
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(17,21,28,.10) 100%),
+    repeating-linear-gradient(115deg,
+                              transparent 0,
+                              transparent 2px,
+                              rgba(17,21,28,.01) 2px,
+                              rgba(17,21,28,.01) 3px),
+    radial-gradient(ellipse at 78% 110%, rgba(17,21,28,.05) 0%, transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f4f5f7 100%);
+}
+/* Front face content — remaining (color-only) light-mode overrides */
+[data-theme="light"] .id-brand { color: var(--neutral-900); }
+[data-theme="light"] .id-brand .slash { color: var(--signal-500); }
+[data-theme="light"] .id-nfc { color: var(--neutral-500); }
+[data-theme="light"] .id-nfc svg { color: var(--neutral-600); }
+[data-theme="light"] .id-label { color: var(--neutral-500); }
+[data-theme="light"] .id-footer-row { border-top-color: var(--line); }
+[data-theme="light"] .id-github { color: var(--neutral-700); }
+[data-theme="light"] .id-github svg { color: var(--neutral-600); }
+[data-theme="light"] .id-github:hover,
+[data-theme="light"] .id-github:hover svg { color: var(--signal-600); }
+[data-theme="light"] .id-status { color: var(--signal-600); }
+[data-theme="light"] .id-flip-hint { color: var(--neutral-500); }
+[data-theme="light"] .id-card:hover .id-flip-hint { color: var(--signal-600); }
+
+/* Back face content */
+[data-theme="light"] .id-sig {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(17,21,28,.04),
+      rgba(17,21,28,.04) 4px,
+      rgba(17,21,28,.08) 4px,
+      rgba(17,21,28,.08) 8px
+    );
+}
+[data-theme="light"] .id-sig-name { color: var(--neutral-900); text-shadow: none; }
+[data-theme="light"] .id-sig-label { color: var(--neutral-500); }
+[data-theme="light"] .id-cvv { background: var(--neutral-900); }
+[data-theme="light"] .id-cvv-label { color: var(--neutral-400); }
+[data-theme="light"] .id-cvv-num { color: #fff; }
+[data-theme="light"] .id-back-meta .id-row .k { color: var(--neutral-500); }
+[data-theme="light"] .id-back-meta .id-row .v { color: var(--neutral-900); }
+[data-theme="light"] .id-back-meta .id-row .v b { color: var(--signal-600); font-weight: 600; }
+[data-theme="light"] .id-fineprint {
+  color: var(--neutral-500);
+  border-top-color: var(--line);
+}
+
 /* Code block — keep terminal feel: stays dark in both themes.
    Re-assert dark surface against light-theme variable swaps. */
 [data-theme="light"] .code {
@@ -1752,13 +2624,135 @@ html[data-theme-switching] *::after {
             </div>
           </div>
         </div>
-        <div class="kv-readout">
-          <div class="row"><div class="k">STATUS</div><div class="v"><b>● ACTIVE</b> · Open to senior roles</div></div>
-          <div class="row"><div class="k">CURRENT</div><div class="v">SyanSoft Technologies</div></div>
-          <div class="row"><div class="k">SINCE</div><div class="v">Sep 2022 · <span id="dyn-tenure">3y 7mo</span></div></div>
-          <div class="row"><div class="k">MODE</div><div class="v"><b>Remote</b> · Bhaktapur, Nepal</div></div>
-          <div class="row"><div class="k">STACK</div><div class="v">Java · Spring · AWS · K8s</div></div>
-          <div class="row"><div class="k">CONTACT</div><div class="v">forofficialsanjit@gmail.com</div></div>
+        <!-- Digital ID flip card — replaces the kv-readout block.
+             Click / Space / Enter to flip. Mouse-move parallax tilt. -->
+        <div class="id-card" id="id-card" role="button" tabindex="0"
+             aria-label="Digital ID card. Press to flip and reveal contact details."
+             aria-pressed="false">
+          <div class="id-card-inner">
+            <!-- FRONT FACE -->
+            <div class="id-card-face id-card-front">
+              <span class="id-holo" aria-hidden="true"></span>
+              <span class="id-rainbow" aria-hidden="true"></span>
+              <div class="id-top">
+                <div class="id-brand">
+                  <img src="assets/logo-mark.svg" alt="">
+                  <span>sanjit<span class="slash">/</span>shrestha</span>
+                </div>
+                <div class="id-nfc">
+                  <span class="id-nfc-ripple" aria-hidden="true"></span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                    <path d="M9 5a7 7 0 0 1 0 14"/>
+                    <path d="M13 8a4 4 0 0 1 0 8"/>
+                    <path d="M17 11a1 1 0 0 1 0 2"/>
+                  </svg>
+                  NFC
+                </div>
+              </div>
+
+              <!-- EMV-style chip (wrapped for hover glint sweep) -->
+              <div class="id-chip-wrap" aria-hidden="true">
+                <svg class="id-chip" viewBox="0 0 44 34">
+                  <defs>
+                    <linearGradient id="chip-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%"  stop-color="#e6c46e"/>
+                      <stop offset="32%" stop-color="#a07a26"/>
+                      <stop offset="55%" stop-color="#f3d488"/>
+                      <stop offset="78%" stop-color="#b88c2e"/>
+                      <stop offset="100%" stop-color="#7a5d1a"/>
+                    </linearGradient>
+                    <linearGradient id="chip-shade" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%"  stop-color="rgba(255,255,255,.18)"/>
+                      <stop offset="50%" stop-color="rgba(0,0,0,0)"/>
+                      <stop offset="100%" stop-color="rgba(0,0,0,.30)"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="44" height="34" rx="5" fill="url(#chip-gold)"/>
+                  <rect width="44" height="34" rx="5" fill="url(#chip-shade)"/>
+                  <g stroke="rgba(0,0,0,.45)" stroke-width="1" fill="none">
+                    <path d="M0 9 H14 M30 9 H44 M0 17 H12 M32 17 H44 M0 25 H14 M30 25 H44 M14 0 V34 M30 0 V34"/>
+                  </g>
+                  <rect x="14" y="9" width="16" height="16" rx="1.2" fill="none" stroke="rgba(0,0,0,.5)" stroke-width=".8"/>
+                  <rect x="17" y="12" width="10" height="10" rx="1" fill="rgba(255,255,255,.10)" stroke="rgba(0,0,0,.4)" stroke-width=".5"/>
+                  <!-- inner contact dots -->
+                  <circle cx="22" cy="17" r="1" fill="rgba(0,0,0,.35)"/>
+                </svg>
+              </div>
+
+              <!-- Card "number" — employee ID · hex experience · active year range -->
+              <div class="id-number">
+                <span class="seg">0006</span>
+                <span class="seg dim">·</span>
+                <span class="seg" id="dyn-card-hex">0x06</span>
+                <span class="seg dim">·</span>
+                <span class="seg" id="dyn-card-range">2019 — 2026</span>
+              </div>
+
+              <div class="id-identity">
+                <div>
+                  <div class="id-label">Holder</div>
+                  <div class="id-holder">SANJIT SHRESTHA</div>
+                </div>
+                <div>
+                  <div class="id-label">Role</div>
+                  <div class="id-role-value">Architect · Engineer</div>
+                </div>
+              </div>
+
+              <div class="id-footer-row">
+                <a class="id-github" href="https://github.com/sanjitshrestha" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="GitHub profile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m16 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                  </svg>
+                  <span class="handle">github.com/sanjitshrestha</span>
+                </a>
+                <div class="id-status"><span class="dot"></span>Active</div>
+              </div>
+
+              <div class="id-flip-hint">TAP TO FLIP&nbsp;&nbsp;↻</div>
+
+              <!-- Micro-text security strip — anti-counterfeit motif -->
+              <span class="id-microtext" aria-hidden="true">SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER</span>
+            </div>
+
+            <!-- BACK FACE -->
+            <div class="id-card-face id-card-back">
+              <span class="id-holo" aria-hidden="true"></span>
+              <span class="id-tier-watermark" aria-hidden="true">ARCHITECT</span>
+              <span class="id-seal" aria-hidden="true"></span>
+              <div class="id-magstripe" aria-hidden="true">
+                <div class="id-magstripe-stream">
+                  BUILD&nbsp;&nbsp;a7f3b9c2&nbsp;&nbsp;·&nbsp;&nbsp;DEPLOY&nbsp;&nbsp;OK&nbsp;&nbsp;·&nbsp;&nbsp;v2026.05&nbsp;&nbsp;·&nbsp;&nbsp;LIVE&nbsp;&nbsp;·&nbsp;&nbsp;UPTIME&nbsp;&nbsp;99.94%&nbsp;&nbsp;·&nbsp;&nbsp;0x06&nbsp;&nbsp;·&nbsp;&nbsp;SYS-OK&nbsp;&nbsp;·&nbsp;&nbsp;ARCH-NG&nbsp;&nbsp;·&nbsp;&nbsp;BHKT&nbsp;&nbsp;·&nbsp;&nbsp;LATENCY&nbsp;&nbsp;38ms&nbsp;&nbsp;·&nbsp;&nbsp;PEERS&nbsp;&nbsp;ONLINE&nbsp;&nbsp;·&nbsp;&nbsp;
+                  BUILD&nbsp;&nbsp;a7f3b9c2&nbsp;&nbsp;·&nbsp;&nbsp;DEPLOY&nbsp;&nbsp;OK&nbsp;&nbsp;·&nbsp;&nbsp;v2026.05&nbsp;&nbsp;·&nbsp;&nbsp;LIVE&nbsp;&nbsp;·&nbsp;&nbsp;UPTIME&nbsp;&nbsp;99.94%&nbsp;&nbsp;·&nbsp;&nbsp;0x06&nbsp;&nbsp;·&nbsp;&nbsp;SYS-OK&nbsp;&nbsp;·&nbsp;&nbsp;ARCH-NG&nbsp;&nbsp;·&nbsp;&nbsp;BHKT&nbsp;&nbsp;·&nbsp;&nbsp;LATENCY&nbsp;&nbsp;38ms&nbsp;&nbsp;·&nbsp;&nbsp;PEERS&nbsp;&nbsp;ONLINE&nbsp;&nbsp;·&nbsp;&nbsp;
+                </div>
+              </div>
+              <div class="id-back-body">
+                <div class="id-sig-row">
+                  <div class="id-sig">
+                    <div class="id-sig-name">Sanjit Shrestha</div>
+                    <div class="id-sig-label">Authorized · Software Architect</div>
+                  </div>
+                  <div class="id-cvv">
+                    <div class="id-cvv-label">VER</div>
+                    <div class="id-cvv-num" id="dyn-card-ver">2026.05</div>
+                  </div>
+                </div>
+
+                <div class="id-back-meta">
+                  <div class="id-row"><span class="k">Current</span><span class="v">SyanSoft Technologies</span></div>
+                  <div class="id-row"><span class="k">Tenure</span><span class="v">Sep 2022 · <span id="dyn-tenure">3y 7mo</span></span></div>
+                  <div class="id-row"><span class="k">Mode</span><span class="v"><b>Remote</b> · Bhaktapur, Nepal</span></div>
+                  <div class="id-row"><span class="k">Stack</span><span class="v">Java · Spring · AWS · K8s</span></div>
+                  <div class="id-row"><span class="k">Contact</span><span class="v">forofficialsanjit@gmail.com</span></div>
+                </div>
+
+                <div class="id-fineprint">
+                  Issued in Bhaktapur, Nepal · re-printed on every commit. Non-transferable. Open to senior architect &amp; staff-engineer engagements. Property of the holder.
+                </div>
+              </div>
+              <div class="id-flip-hint">↻&nbsp;&nbsp;TAP TO FLIP</div>
+            </div>
+          </div>
         </div>
       </aside>
     </div>
@@ -2301,6 +3295,116 @@ document.querySelectorAll('[data-row]').forEach(row => {
     row.querySelector('.toggle').textContent = row.classList.contains('open') ? '×' : '+';
   });
 });
+
+// ===== Digital ID flip card =====
+(function () {
+  const card  = document.getElementById('id-card');
+  if (!card) return;
+  const inner = card.querySelector('.id-card-inner');
+
+  const MAX_TILT = 8;       // degrees
+  const HOVER_LIFT = 14;    // px — translateZ on hover
+  let isFlipping = false;
+  let isHovering = false;
+  let rafId      = null;
+  let pendingTransform = '';
+
+  function currentBase() {
+    return card.classList.contains('flipped') ? 180 : 0;
+  }
+
+  function flip() {
+    if (isFlipping) return;
+    isFlipping = true;
+    inner.style.transform = '';
+    // Press feedback — card pushes DOWN briefly, then flips up & over
+    card.classList.add('is-pressing');
+    setTimeout(() => {
+      card.classList.remove('is-pressing');
+      card.classList.toggle('flipped');
+      card.setAttribute('aria-pressed', card.classList.contains('flipped') ? 'true' : 'false');
+      // Flip duration matches CSS transition (920ms)
+      setTimeout(() => { isFlipping = false; }, 940);
+    }, 130);
+  }
+
+  card.addEventListener('click', flip);
+  card.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      flip();
+    }
+  });
+
+  // Tilt + lift + cursor-tracked specular — single rAF loop
+  function applyMotion(x, y, mxPct, myPct) {
+    const tiltX = -y * MAX_TILT;                  // pitch
+    const tiltY =  x * MAX_TILT + currentBase();  // yaw + face direction
+    const lift  = isHovering ? HOVER_LIFT : 0;
+    pendingTransform = `translateZ(${lift}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+    if (!rafId) {
+      rafId = requestAnimationFrame(() => {
+        inner.style.transform = pendingTransform;
+        card.style.setProperty('--mx', mxPct + '%');
+        card.style.setProperty('--my', myPct + '%');
+        rafId = null;
+      });
+    }
+  }
+
+  card.addEventListener('mouseenter', () => { isHovering = true; });
+  card.addEventListener('mousemove', (e) => {
+    if (isFlipping) return;
+    const r = card.getBoundingClientRect();
+    const xRel = (e.clientX - r.left) / r.width;
+    const yRel = (e.clientY - r.top)  / r.height;
+    applyMotion(xRel - 0.5, yRel - 0.5, (xRel * 100).toFixed(1), (yRel * 100).toFixed(1));
+  });
+
+  card.addEventListener('mouseleave', () => {
+    isHovering = false;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    inner.style.transform = '';
+    card.style.setProperty('--mx', '50%');
+    card.style.setProperty('--my', '50%');
+  });
+
+  // Boot sequence — sequentially fades in front-face children
+  // Triggers when the card scrolls into view, but no later than 1.2s after page load.
+  const bootObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        requestAnimationFrame(() => card.classList.add('booted'));
+        bootObserver.unobserve(card);
+      }
+    });
+  }, { threshold: .25 });
+  bootObserver.observe(card);
+  // Safety net: if intersection never fires (e.g., already in view above the fold)
+  setTimeout(() => { if (!card.classList.contains('booted')) card.classList.add('booted'); }, 1200);
+
+  // Respect reduced-motion: lock tilt and specular to center
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    card.addEventListener('mousemove', (e) => e.stopImmediatePropagation(), true);
+  }
+
+  // ── Card-front dynamic values ──
+  // Hex card identifier (e.g. 0x06) — uses career years from the dynamic engine.
+  // The dynamic engine runs first, so by the time we get here `dyn-hex-exp` is set.
+  const hexExp = document.getElementById('dyn-hex-exp');
+  const cardHex = document.getElementById('dyn-card-hex');
+  if (hexExp && cardHex) {
+    // dyn-hex-exp text looks like "0x06y"; strip the trailing y
+    cardHex.textContent = hexExp.textContent.replace(/y$/i, '');
+  }
+  // Card version mirrors the build version string
+  const ver  = document.getElementById('dyn-footer-ver');
+  const cver = document.getElementById('dyn-card-ver');
+  if (ver && cver) cver.textContent = ver.textContent;
+  // Active year range — "2019 — <current year>"
+  const range = document.getElementById('dyn-card-range');
+  if (range) range.textContent = '2019 — ' + new Date().getFullYear();
+})();
 
 // ===== Theme toggle =====
 (function () {
