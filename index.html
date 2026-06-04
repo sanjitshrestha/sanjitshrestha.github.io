@@ -1090,8 +1090,8 @@ nav.top {
   position: absolute;
   bottom: 6px;
   right: 14px;
-  font-size: 7.5px;
-  letter-spacing: .22em;
+  font-size: 6.5px;
+  letter-spacing: .18em;
   color: var(--neutral-500);
   opacity: .8;
   z-index: 2;
@@ -1462,7 +1462,7 @@ section.block:nth-child(even) {
   /* remove grid-column — it's not a direct grid child */
 }
 .work-row.open .work-detail {
-  max-height: 600px;
+  max-height: 900px;
   opacity: 1;
   padding-top: var(--sp-2);
 }
@@ -1472,6 +1472,39 @@ section.block:nth-child(even) {
   color: var(--fg-2);
   margin: 0 0 var(--sp-2);
   max-width: 680px;
+}
+.work-outcomes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp-2);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 18px;
+  max-width: 760px;
+}
+.work-outcomes li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+.work-outcomes li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--signal-500);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.work-outcomes .metric {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--signal-500);
+  margin-right: 4px;
+  letter-spacing: .02em;
 }
 .work-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 
@@ -1673,6 +1706,167 @@ section.block:nth-child(even) {
   max-width: 680px;
 }
 .exp-row .body .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ===== Services / Engagement packages ===== */
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--sp-3);
+}
+.svc-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  transition: border-color 220ms var(--ease), transform 220ms var(--ease);
+  overflow: hidden;
+}
+.svc-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+.svc-card:hover {
+  border-color: var(--signal-500);
+  transform: translateY(-2px);
+}
+.svc-card.featured {
+  border-color: var(--signal-500);
+  background: linear-gradient(180deg, rgba(0,163,82,.04) 0%, var(--surface) 60%);
+}
+.svc-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--signal-500), transparent);
+}
+.svc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.svc-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--fg-3);
+}
+.svc-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--fg-3);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.svc-pill.signal {
+  color: var(--signal-500);
+  border-color: var(--signal-500);
+  background: rgba(0,163,82,.08);
+}
+.svc-title {
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  color: var(--fg);
+  margin: 0;
+}
+.svc-pitch {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  margin: 0;
+}
+.svc-deliverables {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.svc-deliverables li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+.svc-deliverables li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--signal-500);
+  font-size: 12px;
+  font-weight: 700;
+}
+.svc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: auto;
+}
+.svc-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--fg-3);
+  letter-spacing: .02em;
+}
+.svc-price b {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.svc-foot-strip {
+  margin-top: var(--sp-3);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+.svc-foot-cell {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid var(--line);
+}
+.svc-foot-cell:last-child { border-right: none; }
+.svc-foot-cell .k {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.svc-foot-cell .v {
+  font-size: 13.5px;
+  color: var(--fg);
+}
+@media (max-width: 760px) {
+  .svc-foot-cell { border-right: none; border-bottom: 1px solid var(--line); }
+  .svc-foot-cell:last-child { border-bottom: none; }
+}
 
 /* ===== Code / Terminal block ===== */
 .code {
@@ -2200,6 +2394,35 @@ html[data-theme-switching] *::after {
 [data-theme="light"] .work-row:hover { background: var(--neutral-50); }
 [data-theme="light"] .work-row .ttl { color: var(--fg); }
 [data-theme="light"] .work-row .scale { color: var(--signal-600); }
+[data-theme="light"] .work-outcomes li::before { color: var(--signal-600); }
+[data-theme="light"] .work-outcomes .metric { color: var(--signal-600); }
+
+/* Services */
+[data-theme="light"] .svc-card {
+  background: var(--surface);
+  border-color: var(--line);
+}
+[data-theme="light"] .svc-card:hover { border-color: var(--signal-600); }
+[data-theme="light"] .svc-card.featured {
+  border-color: var(--signal-600);
+  background: linear-gradient(180deg, rgba(0,163,82,.05) 0%, var(--surface) 60%);
+}
+[data-theme="light"] .svc-card.featured::before {
+  background: linear-gradient(90deg, transparent, var(--signal-600), transparent);
+}
+[data-theme="light"] .svc-card::after { box-shadow: none; }
+[data-theme="light"] .svc-pill { border-color: var(--line); color: var(--fg-3); }
+[data-theme="light"] .svc-pill.signal { color: var(--signal-600); border-color: var(--signal-600); background: rgba(0,163,82,.08); }
+[data-theme="light"] .svc-title { color: var(--fg); }
+[data-theme="light"] .svc-deliverables li::before { color: var(--signal-600); }
+[data-theme="light"] .svc-foot { border-top-color: var(--line); }
+[data-theme="light"] .svc-price b { color: var(--fg); }
+[data-theme="light"] .svc-foot-strip { background: var(--surface); border-color: var(--line); }
+[data-theme="light"] .svc-foot-cell { border-right-color: var(--line); }
+[data-theme="light"] .svc-foot-cell .v { color: var(--fg); }
+@media (max-width: 760px) {
+  [data-theme="light"] .svc-foot-cell { border-bottom-color: var(--line); }
+}
 
 /* Architecture diagram */
 [data-theme="light"] .arch {
@@ -2565,7 +2788,8 @@ html[data-theme-switching] *::after {
       <a href="#work"       data-section="work"><span>01</span>Work</a>
       <a href="#stack"      data-section="stack"><span>02</span>Stack</a>
       <a href="#experience" data-section="experience"><span>03</span>Experience</a>
-      <a href="#contact"    data-section="contact"><span>04</span>Contact</a>
+      <a href="#services"   data-section="services"><span>04</span>Services</a>
+      <a href="#contact"    data-section="contact"><span>05</span>Contact</a>
     </div>
     <div class="nav-right">
       <span class="status-pill"><span class="status-dot"></span>OPEN&nbsp;TO&nbsp;WORK</span>
@@ -2709,7 +2933,7 @@ html[data-theme-switching] *::after {
                 <div class="id-status"><span class="dot"></span>Active</div>
               </div>
 
-              <div class="id-flip-hint">TAP TO FLIP&nbsp;&nbsp;↻</div>
+              <div class="id-flip-hint">SIDE A&nbsp;·&nbsp;ED 2026.05&nbsp;·&nbsp;TAP TO FLIP&nbsp;↻</div>
 
               <!-- Micro-text security strip — anti-counterfeit motif -->
               <span class="id-microtext" aria-hidden="true">SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER&nbsp;·&nbsp;SANJIT&nbsp;·&nbsp;ARCHITECT&nbsp;·&nbsp;ENGINEER</span>
@@ -2750,7 +2974,7 @@ html[data-theme-switching] *::after {
                   Issued in Bhaktapur, Nepal · re-printed on every commit. Non-transferable. Open to senior architect &amp; staff-engineer engagements. Property of the holder.
                 </div>
               </div>
-              <div class="id-flip-hint">↻&nbsp;&nbsp;TAP TO FLIP</div>
+              <div class="id-flip-hint">↻&nbsp;SIDE B&nbsp;·&nbsp;SHA a7f3b9c2&nbsp;·&nbsp;TAP TO FLIP</div>
             </div>
           </div>
         </div>
@@ -2784,6 +3008,12 @@ html[data-theme-switching] *::after {
           <div class="ttl">Payments platform · ACH + Plaid + Stripe</div>
           <div class="work-detail">
             <p>Architected the payments platform for a US-based consumer lender. Designed the ledger, idempotency keys, ACH/Plaid/Stripe rails, and the reconciliation pipeline. Led a team of 6 backend engineers from kickoff to production.</p>
+            <ul class="work-outcomes">
+              <li><span class="metric">$1M+/mo</span>processed within 90 days of go-live</li>
+              <li><span class="metric">0</span>double-charges across 4M+ idempotent operations</li>
+              <li><span class="metric">99.97%</span>ACH retry success after recon pipeline shipped</li>
+              <li><span class="metric">6 → 1</span>engineers needed on weekly recon (was a full team day)</li>
+            </ul>
             <div class="work-tags">
               <span class="tag"><span class="dot"></span>2024</span>
               <span class="tag signal"><span class="dot"></span>Active</span>
@@ -2806,6 +3036,12 @@ html[data-theme-switching] *::after {
           <div class="ttl">Logistics &amp; fleet engine</div>
           <div class="work-detail">
             <p>Real-time tracking and automated invoicing for a regional freight carrier. Decomposed a four-year-old monolith into 14 services around shipments, billing, and notifications. 1M+ events/day across the bus.</p>
+            <ul class="work-outcomes">
+              <li><span class="metric">1 → 14</span>services carved out of a 4-year monolith</li>
+              <li><span class="metric">1M+/day</span>events flowing through Kafka with no message loss</li>
+              <li><span class="metric">−72%</span>invoice-generation time vs. legacy batch job</li>
+              <li><span class="metric">0</span>data-loss incidents during phased cutover</li>
+            </ul>
             <div class="work-tags">
               <span class="tag"><span class="dot"></span>2023</span>
               <span class="tag">Kotlin</span>
@@ -2826,6 +3062,12 @@ html[data-theme-switching] *::after {
           <div class="ttl">AI analytics platform · OpenAI-backed</div>
           <div class="work-detail">
             <p>Analytics surface that turns raw event streams into plain-English summaries and anomaly alerts. Built the prompt-cache layer, the cost governor, and the JSON-mode validator. Cut model spend 40% in the first quarter.</p>
+            <ul class="work-outcomes">
+              <li><span class="metric">−40%</span>OpenAI spend in Q1 via prompt-cache layer</li>
+              <li><span class="metric">86%</span>cache hit-rate on summarization prompts</li>
+              <li><span class="metric">0</span>malformed-JSON incidents reaching downstream consumers</li>
+              <li><span class="metric">~3s → 400ms</span>median summary latency post-cache</li>
+            </ul>
             <div class="work-tags">
               <span class="tag"><span class="dot"></span>2023</span>
               <span class="tag">Java</span>
@@ -2846,6 +3088,12 @@ html[data-theme-switching] *::after {
           <div class="ttl">High-throughput API gateway</div>
           <div class="work-detail">
             <p>Bespoke gateway in front of 22 backend services. Token-bucket rate limiting, circuit breakers, OpenTelemetry across the board. Handled 1M+ requests/day at single-digit ms p99 overhead.</p>
+            <ul class="work-outcomes">
+              <li><span class="metric">1M+/day</span>requests routed across 22 services</li>
+              <li><span class="metric">&lt; 8ms</span>p99 gateway overhead under peak load</li>
+              <li><span class="metric">−61%</span>5xx rate after circuit-breaker rollout</li>
+              <li><span class="metric">100%</span>trace coverage via OpenTelemetry instrumentation</li>
+            </ul>
             <div class="work-tags">
               <span class="tag"><span class="dot"></span>2022</span>
               <span class="tag">Spring Cloud Gateway</span>
@@ -2865,6 +3113,12 @@ html[data-theme-switching] *::after {
           <div class="ttl">Microservices migration · zero-downtime</div>
           <div class="work-detail">
             <p>Led the breakup of a Django monolith into Spring services on AWS. Strangler-fig pattern across 9 months. Zero downtime cutover, regression-test suite green throughout, no rollbacks.</p>
+            <ul class="work-outcomes">
+              <li><span class="metric">0s</span>downtime across 9-month strangler-fig cutover</li>
+              <li><span class="metric">0</span>production rollbacks during migration</li>
+              <li><span class="metric">100%</span>regression suite green through every cutover step</li>
+              <li><span class="metric">−45%</span>infra cost after ECS right-sizing</li>
+            </ul>
             <div class="work-tags">
               <span class="tag"><span class="dot"></span>2021</span>
               <span class="tag">Spring Boot</span>
@@ -3096,13 +3350,125 @@ html[data-theme-switching] *::after {
   </div>
 </section>
 
+<!-- ============== SERVICES / ENGAGEMENT PACKAGES ============== -->
+<section id="services" class="block">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow" style="margin-bottom:18px;display:inline-flex">04 / Services</span>
+        <h2>Engagements with a <span class="em">shape</span></h2>
+      </div>
+      <div class="meta">Fixed scope · Clear deliverables<br><span>Hourly available on request</span></div>
+    </div>
+
+    <div class="svc-grid reveal">
+
+      <article class="svc-card">
+        <header class="svc-head">
+          <span class="svc-num">SVC · 01</span>
+          <span class="svc-pill">1 week · fixed</span>
+        </header>
+        <h3 class="svc-title">Architecture Review</h3>
+        <p class="svc-pitch">A written audit of your current system: bottlenecks, failure modes, and the changes that buy you the most runway. For teams who suspect their architecture is the thing slowing them down.</p>
+        <ul class="svc-deliverables">
+          <li>Written audit (15–25 pages) with risk-ranked findings</li>
+          <li>Annotated architecture diagram of current vs. proposed</li>
+          <li>90-day remediation roadmap with effort estimates</li>
+          <li>1× live walk-through with your engineering leads</li>
+        </ul>
+        <footer class="svc-foot">
+          <span class="svc-price">From <b>$2,400</b></span>
+          <a class="btn btn-sm btn-secondary" href="mailto:forofficialsanjit@gmail.com?subject=Architecture%20Review%20inquiry">Start <span class="arrow">→</span></a>
+        </footer>
+      </article>
+
+      <article class="svc-card">
+        <header class="svc-head">
+          <span class="svc-num">SVC · 02</span>
+          <span class="svc-pill">4–8 weeks · scoped</span>
+        </header>
+        <h3 class="svc-title">Payments &amp; Ledger Build</h3>
+        <p class="svc-pitch">A production-grade payments core — ledger, idempotency, ACH/Stripe/Plaid rails, reconciliation. For founders and CTOs who can't afford a single double-charge.</p>
+        <ul class="svc-deliverables">
+          <li>Double-entry ledger with audited migrations</li>
+          <li>Idempotency-key infrastructure across writes</li>
+          <li>Stripe / ACH / Plaid integration + retry orchestration</li>
+          <li>Reconciliation pipeline + dashboards</li>
+        </ul>
+        <footer class="svc-foot">
+          <span class="svc-price">4–8 weeks · <b>scoped quote</b></span>
+          <a class="btn btn-sm btn-primary" href="mailto:forofficialsanjit@gmail.com?subject=Payments%20build%20inquiry">Scope it <span class="arrow">→</span></a>
+        </footer>
+      </article>
+
+      <article class="svc-card">
+        <header class="svc-head">
+          <span class="svc-num">SVC · 03</span>
+          <span class="svc-pill">3–6 mo</span>
+        </header>
+        <h3 class="svc-title">Monolith → Services Migration</h3>
+        <p class="svc-pitch">Strangler-fig plan and execution. I run the cutover playbook I've used to break apart four monoliths without a rollback. Best when your release cadence has stalled.</p>
+        <ul class="svc-deliverables">
+          <li>Domain decomposition + service boundary mapping</li>
+          <li>Phased cutover plan with rollback gates</li>
+          <li>CI/CD, observability, and on-call runbooks</li>
+          <li>Hands-on engineering through go-live</li>
+        </ul>
+        <footer class="svc-foot">
+          <span class="svc-price">Retainer · <b>from $8k/mo</b></span>
+          <a class="btn btn-sm btn-secondary" href="mailto:forofficialsanjit@gmail.com?subject=Migration%20engagement%20inquiry">Discuss <span class="arrow">→</span></a>
+        </footer>
+      </article>
+
+      <article class="svc-card">
+        <header class="svc-head">
+          <span class="svc-num">SVC · 04</span>
+          <span class="svc-pill">2 weeks · fixed</span>
+        </header>
+        <h3 class="svc-title">AI Cost-Governance Layer</h3>
+        <p class="svc-pitch">A prompt-cache, budget guard, and JSON-mode validator dropped in front of your LLM calls. For teams whose OpenAI bill is growing faster than their revenue.</p>
+        <ul class="svc-deliverables">
+          <li>Semantic prompt cache (Redis / Postgres-backed)</li>
+          <li>Per-tenant + per-route token budget guard</li>
+          <li>Strict JSON-mode validation + repair loop</li>
+          <li>Spend &amp; hit-rate dashboard</li>
+        </ul>
+        <footer class="svc-foot">
+          <span class="svc-price">From <b>$3,800</b></span>
+          <a class="btn btn-sm btn-secondary" href="mailto:forofficialsanjit@gmail.com?subject=AI%20cost%20governance%20inquiry">Start <span class="arrow">→</span></a>
+        </footer>
+      </article>
+
+    </div>
+
+    <div class="svc-foot-strip reveal">
+      <div class="svc-foot-cell">
+        <span class="k">Engagement model</span>
+        <span class="v">Fixed-scope, retainer, or hourly</span>
+      </div>
+      <div class="svc-foot-cell">
+        <span class="k">Response time</span>
+        <span class="v">&lt; 12h on weekdays · NPT</span>
+      </div>
+      <div class="svc-foot-cell">
+        <span class="k">Overlap</span>
+        <span class="v">4h+ with US-East, EU, IST</span>
+      </div>
+      <div class="svc-foot-cell">
+        <span class="k">Contract</span>
+        <span class="v">Upwork, direct, or your MSA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============== CONTACT ============== -->
 <section id="contact" class="block">
   <div class="container">
     <div class="contact-block reveal">
       <div class="contact-grid">
         <div>
-          <span class="eyebrow" style="margin-bottom:24px;display:inline-flex">04 / Contact</span>
+          <span class="eyebrow" style="margin-bottom:24px;display:inline-flex">05 / Contact</span>
           <h2>Let's design the<br><span class="em">failure mode</span> first.</h2>
           <p>If you're building something that needs to stay up — payments, logistics, AI on top of real data, or an architecture that's stopped scaling — I'd like to hear about it.</p>
           <div class="contact-cta">
@@ -3244,7 +3610,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 // ===== Nav scroll-spy =====
-const sections  = ['work','stack','experience','contact'];
+const sections  = ['work','stack','experience','services','contact'];
 const navLinkMap = {};
 sections.forEach(id => {
   const a = document.querySelector(`.nav-links a[data-section="${id}"]`);
