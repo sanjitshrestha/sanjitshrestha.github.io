@@ -29,7 +29,7 @@ function Hero() {
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 32 }}>
             <Button variant="primary">Selected work →</Button>
-            <Button variant="secondary">Download résumé</Button>
+            <Button variant="secondary">Download resume</Button>
           </div>
         </div>
         <div>
