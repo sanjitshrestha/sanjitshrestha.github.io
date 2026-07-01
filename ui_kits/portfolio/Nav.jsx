@@ -35,7 +35,7 @@ function Nav() {
         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#4b5563', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 6 }}>
           <StatusDot tone="go" />OPEN&nbsp;TO&nbsp;WORK
         </div>
-        <Button size="sm">Résumé →</Button>
+        <Button size="sm">Resume →</Button>
       </div>
     </nav>
   );
